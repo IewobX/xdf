@@ -1,0 +1,269 @@
+body{
+    font-family: 微软雅黑;
+}
+
+ul,
+li{
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+table{
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+.hidden{
+    display: none;
+}
+.show{
+    display: block;
+}
+.fl{
+    float: left;
+}
+.fr{
+    float: right;
+}
+.right-notification .notification-menu:first-child{
+    color: #5a565b;
+    line-height: 60px;
+    font-size: 18px;
+}
+::-webkit-inner-spin-button {
+    visibility: hidden;
+}
+::-webkit-calendar-picker-indicator {
+    border: 1px solid #ccc;
+    border-radius: 2px;
+    box-shadow: inset 0 1px #fff, 0 1px #eee;
+    background-color: #eee;
+    background-image: -webkit-linear-gradient(top, #f0f0f0, #e6e6e6);
+    color: #666;
+}
+/* *
+ * @auther xubowei
+ * 重新定义火狐浏览器select列表样式
+ */
+@-moz-document url-prefix() {
+    select.form-control {
+        -moz-appearance: none;
+        appearance: none;
+        background-image: url("http://221.228.109.114:8083/manage/more/firefox_select_icon.png");
+        background-repeat: no-repeat;
+        background-position: calc(100% - 7px) 50%;
+        background-size: 2% auto;
+        border-radius:3px;
+        padding:0;
+    }
+}
+
+/* *
+ * @auther xubowei
+ * 定义滚动条样式
+ */
+
+::-webkit-scrollbar{
+    width: 8px;
+    background: #ababab;
+}
+::-webkit-scrollbar-button{
+    display: none;
+}
+::-webkit-scrollbar-track-piece{
+    margin-left: 20px;
+    background: #fff;
+}
+::-webkit-scrollbar-thumb{
+    padding-left: 20px;
+    background: #ababab;
+    border-radius: 4px;
+}
+
+
+
+
+
+    /**
+     * @auther xubowei
+     * 上方4个标签栏
+     */
+.me{
+    display: inline-block;
+    /*background: url("../img/user.png") no-repeat center center;*/
+    overflow: hidden;
+    height: 67px;
+    width: 64px;
+}
+.me-user{
+    background: url("../img/user.png") no-repeat center center;
+}
+.me-medal{
+    background: url("../img/medal.png") no-repeat center center;
+}
+.me-chart2{
+    background: url("../img/chart2.png") no-repeat center center;
+}
+.me-chart1{
+    background: url("../img/chart1.png") no-repeat center center;
+
+}
+.state-overview .symbol{
+    padding: 33px 15px;
+}
+.state-overview .value{
+    margin-top: 40px;
+}
+
+.wrapper .col-lg-3 .panel .gray{
+    color: #5a565b;
+}
+.wrapper .col-lg-3 .panel .value > h1{
+    display: inline-block;
+    font-size: 30px;
+}
+.wrapper .col-lg-3 .panel .value > span{
+    font-size: 30px;
+}
+.wrapper .col-lg-3 .panel .value > p{
+    font-size: 20px;
+}
+
+/**
+ * @auther xubowei
+ * 校区及时间的选择
+**/
+.wrapper .me-nav .choose-schoolArea{
+    position: relative;
+    margin-bottom: 15px;
+    font-size: 14px;
+}
+.wrapper .me-nav .choose-schoolArea .select{
+    display: inline-block;
+    height: 31px;
+    width: 164px;
+    color: #6b6b6b;
+    margin-left: 15px;
+    padding: 5px 15px;
+    border-radius: 5px;
+    background-color: #fff;
+}
+.wrapper .me-nav .choose-schoolArea .select:hover,
+.wrapper .me-nav .choose-schoolArea .option .option-item:hover{
+    background-color: #f3f3f3;
+}
+.wrapper .me-nav .choose-schoolArea .select .down{
+    display: inline-block;
+    float: right;
+    height: 20px;
+    width: 9px;
+    background: url("../img/downArrow.png") center center no-repeat;
+}
+.wrapper .me-nav .choose-schoolArea .option{
+    position: absolute;
+    top: 32px;
+    left: 15px;
+    border: 1px solid #F3F3F3;
+    border-radius: 5px;
+    width: 164px;
+    /*padding: 10px 0;*/
+    background-color: #fff;
+    z-index: 10;
+}
+.wrapper .me-nav .choose-schoolArea .option .option-item{
+    width: 164px;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+
+.wrapper .me-nav .choose-date{
+    /*line-height: 40px;*/
+    margin-right: 15px;
+    color: #43d396;
+}
+.wrapper .me-nav .choose-date .prev,
+.wrapper .me-nav .choose-date .next{
+    display: inline-block;
+    width: 14px;
+    height: 18px;
+    cursor: pointer;
+}
+.wrapper .me-nav .choose-date .prev{
+    background: url("../img/prev.png") 0 8px no-repeat;
+}
+.wrapper .me-nav .choose-date .next{
+    background: url("../img/next.png") 8px 8px no-repeat;
+}
+
+/**
+ * @auther xubowei
+ * 下边的标签页
+ */
+.wrapper .panel .table-response{
+    margin-top: 20px;
+    background-color: f3f3f3;
+}
+.wrapper .panel .table-response .tabs{
+    background: #f3f3f3;
+}
+.wrapper .panel .table-response .tabs table{
+    margin-bottom: 0px;
+}
+.wrapper .panel .table-response > ul{
+    border-bottom: 1px solid #43d396;
+}
+.wrapper .panel .table-response .tabs > li{
+    display: inline-block;
+    text-align: center;
+    width: 89px;
+    /*height: 44px;*/
+    line-height: 44px;
+    margin-bottom: -1px;
+
+}
+.wrapper .panel .table-response .tabs > li > span{
+    margin-left: 3px;
+}
+
+.active{
+    background: #fff;
+    border-right: 1px solid #43d396;
+    border-left: 1px solid #43d396;
+    border-top: 1px solid #43d396;
+    border-bottom: none;
+
+}
+
+
+/* *
+ * @auther xubowei
+ * 重写表格样式
+ */
+.wrapper .panel .table-response{
+    width: 102%;
+}
+.wrapper .panel .table-response .tabs #lessonStartReminding_wrapper{
+    /*padding: 0 10px;*/
+    background: #fff;
+}
+.wrapper .panel .table-response .tabs #lessonStartReminding_wrapper .dataTables_scroll{
+    border-bottom: 1px solid #eee; 
+}
+.wrapper .panel .table-response .tabs #lessonStartReminding_wrapper .dataTables_scroll .dataTables_scrollHead .dataTables_scrollHeadInner table thead th{
+    text-align: center;
+}
+.wrapper .panel .table-response .tabs .table{
+    margin-top: -2px;
+}
+.table-bordered>tbody>tr>td, .table-bordered>tbody>tr>th, .table-bordered>tfoot>tr>td,
+.table-bordered>tfoot>tr>th, .table-bordered>thead>tr>td, .table-bordered>thead>tr>th{
+    border: none;
+    border-bottom: 1px solid #eee;
+}
+.dataTables_wrapper.no-footer .dataTables_scrollBody{
+    border: none;
+}
+.table-bordered{
+    border: none;
+}
