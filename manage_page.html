@@ -8,7 +8,7 @@
 <meta name="keyword" content="slick, flat, dashboard, bootstrap, admin, template, theme, responsive, fluid, retina">
 <link rel="shortcut icon" href="javascript:;" type="image/png">
 
-<title>课堂教学管理系统</title>
+<title>学管主页</title>
 
 <!--right slidebar-->
 <link href="css/slidebars.css" rel="stylesheet">
@@ -44,7 +44,7 @@
                 </a>
             </div>
             <!--<div class="icon-logo dark-logo-bg hidden-xs hidden-sm">-->
-                <!--<a href="Lessoneminding.html">-->
+                <!--<a href="manage_page.html">-->
                     <!--<img src="img/logo-icon.png" alt="">-->
                     <!--&lt;!&ndash;<i class="fa fa-maxcdn"></i>&ndash;&gt;-->
                 <!--</a>-->
@@ -373,20 +373,22 @@
                 </div>
             </div>
             <div class="row me-nav">
-                <div class="choose-schoolArea fl">
-                    <!--<select class="form-control">-->
-                        <!--<option value="1">武林门校区</option>-->
-                    <!--</select>-->
-                    <div class="select">
-                        <span class="schoolArea">武林门校区</span>
-                        <span class="down"></span>
+                <div>
+                    <div class="choose- fl">
+                        <!--<select class="form-control">-->
+                            <!--<option value="1">武林门校区</option>-->
+                        <!--</select>-->
+                        <div class="select">
+                            <span class="schoolArea">武林门校区</span>
+                            <span class="down"></span>
 
+                        </div>
+                        <ul class="option hidden">
+                            <li class="option-item">武林门校区</li>
+                            <li class="option-item">123校区</li>
+                            <li class="option-item">456校区</li>
+                        </ul>
                     </div>
-                    <ul class="option hidden">
-                        <li class="option-item">武林门校区</li>
-                        <li class="option-item">123校区</li>
-                        <li class="option-item">456校区</li>
-                    </ul>
                 </div>
                 <div class="choose-date fr">
                         <!--<div class="input-append date" id="datetimepicker">-->
@@ -501,13 +503,9 @@
 <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function() {
-
         //countTo
-
         $('.timer').countTo();
-
         //owl carousel
-
         $("#news-feed").owlCarousel({
             slideSpeed : 300,
             navigation : true,
@@ -516,14 +514,12 @@
             autoPlay:true
         });
     });
-
     $(window).on("resize",function(){
         let owl = $("#news-feed").data("owlCarousel");
         owl.reinit();
     });
-
-
 </script>
 <script src="js/Jscript.js"></script>
+<script src="js/manage-script.js"></script>
 </body>
 </html>

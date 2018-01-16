@@ -3,6 +3,7 @@ body{
 }
 
 ul,
+ol,
 li{
     list-style: none;
     padding: 0;
@@ -133,12 +134,12 @@ table{
  * @auther xubowei
  * 校区及时间的选择
 **/
-.wrapper .me-nav .choose-schoolArea{
+.wrapper .me-nav .choose-{
     position: relative;
     margin-bottom: 15px;
     font-size: 14px;
 }
-.wrapper .me-nav .choose-schoolArea .select{
+.wrapper .me-nav  .select{
     display: inline-block;
     height: 31px;
     width: 164px;
@@ -148,18 +149,18 @@ table{
     border-radius: 5px;
     background-color: #fff;
 }
-.wrapper .me-nav .choose-schoolArea .select:hover,
-.wrapper .me-nav .choose-schoolArea .option .option-item:hover{
+.wrapper .me-nav .select:hover,
+.wrapper .me-nav .option .option-item:hover{
     background-color: #f3f3f3;
 }
-.wrapper .me-nav .choose-schoolArea .select .down{
+.wrapper .me-nav .select .down{
     display: inline-block;
     float: right;
     height: 20px;
     width: 9px;
     background: url("../img/downArrow.png") center center no-repeat;
 }
-.wrapper .me-nav .choose-schoolArea .option{
+.wrapper .me-nav .option{
     position: absolute;
     top: 32px;
     left: 15px;
@@ -170,7 +171,7 @@ table{
     background-color: #fff;
     z-index: 10;
 }
-.wrapper .me-nav .choose-schoolArea .option .option-item{
+.wrapper .me-nav .option .option-item{
     width: 164px;
     padding: 5px 10px;
     border-radius: 5px;
@@ -202,13 +203,13 @@ table{
  */
 .wrapper .panel .table-response{
     margin-top: 20px;
-    background-color: f3f3f3;
+    background-color: #f3f3f3;
 }
 .wrapper .panel .table-response .tabs{
     background: #f3f3f3;
 }
 .wrapper .panel .table-response .tabs table{
-    margin-bottom: 0px;
+    margin-bottom: 0;
 }
 .wrapper .panel .table-response > ul{
     border-bottom: 1px solid #43d396;
@@ -217,7 +218,6 @@ table{
     display: inline-block;
     text-align: center;
     width: 89px;
-    /*height: 44px;*/
     line-height: 44px;
     margin-bottom: -1px;
 
