@@ -7,7 +7,7 @@
     let optionItem = $('.wrapper .me-nav  .option .option-item');
     select.click(function () {
         $(this).siblings()[0].className = 'option';
-        console.log($(this).parent().siblings().children());
+        // console.log($(this).parent().siblings().children());
         for(let i = 1;i<$(this).parent().siblings().children().length;i=i+2){
             $(this).parent().siblings().children()[i].className = 'option hidden';
         }

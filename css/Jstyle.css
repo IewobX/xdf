@@ -1,7 +1,9 @@
 body{
     font-family: 微软雅黑;
 }
-
+th{
+    text-align: center; !important;
+}
 ul,
 ol,
 li{
@@ -240,21 +242,28 @@ table{
  * @auther xubowei
  * 重写表格样式
  */
+
+/**
+ ********************************************************************************** bug: 使用滚动条时出现thead宽度问题调整浏览器高度可暂时解决*******************************************************************************
+ **/
 .wrapper .panel .table-response{
     width: 102%;
 }
-.wrapper .panel .table-response .tabs #lessonStartReminding_wrapper{
+.wrapper .panel .table-response .tabs #lessonStartReminding_wrapper,
+.wrapper .panel .table-response .tabs #lessonEndReminding_wrapper{
     /*padding: 0 10px;*/
     background: #fff;
 }
-.wrapper .panel .table-response .tabs #lessonStartReminding_wrapper .dataTables_scroll{
-    border-bottom: 1px solid #eee; 
+.wrapper .panel .table-response .tabs #lessonStartReminding_wrapper .dataTables_scroll,
+.wrapper .panel .table-response .tabs #lessonEndReminding_wrapper .dataTables_scroll{
+    border-bottom: 1px solid #eee;
 }
-.wrapper .panel .table-response .tabs #lessonStartReminding_wrapper .dataTables_scroll .dataTables_scrollHead .dataTables_scrollHeadInner table thead th{
+.wrapper .panel .table-response .tabs #lessonStartReminding_wrapper .dataTables_scroll .dataTables_scrollHead .dataTables_scrollHeadInner table thead th,
+.wrapper .panel .table-response .tabs #lessonEndReminding_wrapper .dataTables_scroll .dataTables_scrollHead .dataTables_scrollHeadInner table thead th{
     text-align: center;
 }
 .wrapper .panel .table-response .tabs .table{
-    margin-top: -2px;
+    /*margin-top: -2px;*/
 }
 .table-bordered>tbody>tr>td, .table-bordered>tbody>tr>th, .table-bordered>tfoot>tr>td,
 .table-bordered>tfoot>tr>th, .table-bordered>thead>tr>td, .table-bordered>thead>tr>th{
@@ -267,3 +276,16 @@ table{
 .table-bordered{
     border: none;
 }
+
+
+/*.wrapper .panel .table-response .tabs .show .dataTables_scroll .dataTables_scrollHeadInner{*/
+    /*width: 100% !important;*/
+/*}*/
+/*.wrapper .panel .table-response .tabs .show .dataTables_scroll .table{*/
+    /*width: 100% !important;*/
+/*}*/
+
+
+/**
+ ********************************************************************************************************* end ***************************************************************************************************************
+ **/

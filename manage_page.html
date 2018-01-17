@@ -16,6 +16,7 @@
 <!--switchery-->
 <link href="js/switchery/switchery.min.css" rel="stylesheet" type="text/css" media="screen">
 
+
 <!--Morris Chart -->
 <link rel="stylesheet" href="js/morris-chart/morris.css">
 <!--<link rel="stylesheet" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css">-->
@@ -333,7 +334,7 @@
                             <i class="fa me me-user"></i>
                         </div>
                         <div class="value white">
-                            <h1 class="timer" data-from="0" data-to="354" data-speed="1000">354</h1><span>人</span>
+                            <h1 class="timer" data-from="0" data-to="" data-speed="1000">355</h1><span>人</span>
                             <p>在读</p>
                         </div>
                     </section>
@@ -344,7 +345,7 @@
                             <i class="fa me me-medal"></i>
                         </div>
                             <div class="value gray">
-                            <h1 class="purple-color timer" data-from="0" data-to="212" data-speed="1000">212</h1><span>人</span>
+                            <h1 class="purple-color timer" data-from="0" data-to="" data-speed="1000">212</h1><span>人</span>
                             <p>结课</p>
                         </div>
                     </section>
@@ -355,7 +356,7 @@
                             <i class="fa me me-chart2"></i>
                         </div>
                         <div class="value white">
-                            <h1 class="timer" data-from="0" data-to="2304.00" data-speed="1000">2304.00</h1><span>小时</span>
+                            <h1 class="timer" data-from="0" data-to="" data-speed="1000">2304</h1><span>小时</span>
                             <p>消课</p>
                         </div>
                     </section>
@@ -366,7 +367,7 @@
                             <i class="fa me me-chart1"></i>
                         </div>
                         <div class="value gray">
-                            <h1 class="green-color timer" data-from="0" data-to="2304.00" data-speed="3000">2304.00</h1><span>小时</span>
+                            <h1 class="green-color timer" data-from="0" data-to="" data-speed="3000">2304</h1><span>小时</span>
                             <p>待销课</p>
                         </div>
                     </section>
@@ -374,6 +375,7 @@
             </div>
             <div class="row me-nav">
                 <div>
+                    <div id="school"></div>
                     <div class="choose- fl">
                         <!--<select class="form-control">-->
                             <!--<option value="1">武林门校区</option>-->
@@ -494,7 +496,7 @@
 <!--Icheck-->
 <!--<script src="js/icheck/skins/icheck.min.js"></script>-->
 <!--<script src="js/todo-init.js"></script>-->
-
+<script src="js/my_custom_control_bak.js" type="text/javascript"></script>
 <!--jquery countTo-->
 <script src="js/jquery-countTo/jquery.countTo.js" type="text/javascript"></script>
 <!--<script src="https://www.datatables.net/media/js/site.js?_=88b8e26b7e3dd4eee69f199f9880a0e0"></script>-->
@@ -506,17 +508,17 @@
         //countTo
         $('.timer').countTo();
         //owl carousel
-        $("#news-feed").owlCarousel({
-            slideSpeed : 300,
-            navigation : true,
-            paginationSpeed : 400,
-            singleItem : true,
-            autoPlay:true
-        });
-    });
-    $(window).on("resize",function(){
-        let owl = $("#news-feed").data("owlCarousel");
-        owl.reinit();
+    //     $("#news-feed").owlCarousel({
+    //         slideSpeed : 300,
+    //         navigation : true,
+    //         paginationSpeed : 400,
+    //         singleItem : true,
+    //         autoPlay:true
+    //     });
+    // });
+    // $(window).on("resize",function(){
+    //     let owl = $("#news-feed").data("owlCarousel");
+    //     owl.reinit();
     });
 </script>
 <script src="js/Jscript.js"></script>

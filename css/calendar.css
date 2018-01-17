@@ -144,12 +144,12 @@
 }
 .calendar .calendar-views .dot {
     position: absolute;
-    left: 50%;
-    bottom: 4px;
-    margin-left: -2px; 
-    width: 4px;
-    height: 4px;
-    background: #FF808E;
+    left: 0;
+    bottom: 0;
+    margin-left: 0;
+    width: 45.7px;
+    height: 45.7px;
+    background: rgba(173,116,206,0.22);
     border-radius: 50%;
 }
 .calendar-views .now .dot {
