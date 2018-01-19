@@ -1,3 +1,50 @@
+/**
+ * @auther xubowei
+ * **************************************************************************** bug： ajax数据无法渲染到页面上 *********************************************************************************************************
+ * *********************************************************************** 解决方法： 可以使用取消元素class的timer属性 **************************************************************************************************
+ * ******************************************************************************* 但是元素就无法从0开始计数 ***********************************************************************************************************
+ * */
+(function () {
+    let scheduleTime;
+    let studying;
+    let taughtTime;
+    $.ajax({
+        url: url + 'test5',
+        type: 'get',
+        // data: {user: 'user'},
+        success: function (result) {
+            console.log(result);
+            if(result.isSuccess){
+                scheduleTime = result.Data.scheduleTime;
+                studying = result.Data.studying;
+                taughtTime = result.Data.taughtTime;
+                $('.wrapper .row .col-lg-3 .panel .value h1')[0].innerText = studying;
+                $('.wrapper .row .col-lg-3 .panel .value h1')[2].innerText = taughtTime;
+                $('.wrapper .row .col-lg-3 .panel .value h1')[3] .innerText = scheduleTime;
+                // console.log($($('.wrapper .row .col-lg-3 .panel .value .timer')[0]).html());
+            }
+        }
+    });
+})();
+/**
+ * *************************************************************************************** end **********************************************************************************************************************
+ * */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 (function () {
     /**
      * @auther xubowei
@@ -45,31 +92,34 @@
  * @auther xubowei
  * 日历
  * */
+let calendar;
 (function () {
+    calendar = $('#calendar').calendar({
+        width: 320,
+        height: 320,
+    })
+})();
+
+function renderCalendar(data) {
+    console.log(data);
     $('#calendar').calendar({
         width: 320,
         height: 320,
-        data: [
-            {
-                date: '2015-12-24',
-                value: 'Christmas Eve'
-            },
-            {
-                date: '2015/12/25',
-                value: 'Merry Christmas'
-            },
-            {
-                date: '2016/01/01',
-                value: 'Happy New Year'
-            },
-            {
-                date: '2018-01-01',
-                value: '1'
-            },
-            {
-                date: '2018/01/02',
-                value: '1'
-            }
-        ],
+        data: data
     })
-})();
+}
+function getcalendarData(year,month) {
+
+    $.ajax({
+        url: url + 'test6',
+        type: 'get',
+        data: {year: year,month: month},
+        success: function (result) {
+            if(result.isSuccess){
+                renderCalendar(result.Data);
+            }
+        }
+    })
+}
+
+getcalendarData(2018,1);

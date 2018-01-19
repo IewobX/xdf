@@ -1,5 +1,6 @@
+let url = "http://10.117.70.138:8080/sms/get/";
 /**
- * @auther xubowei
+ * @author xubowei
  * 下拉列表*/
 (function () {
     let select = $('.wrapper .me-nav .select');
@@ -26,19 +27,16 @@
 
 
 /**
- * @auther xubowei
+ * @author xubowei
  * 下边标签页
  * */
 (function() {
     let tabs = $('.wrapper .panel .table-response ul > li ');
-    let tabs_context = $('.wrapper .panel .table-response > div > div');
     tabs.click(function () {
         let i = $(this).index();
         tabs[i].className = 'active';
-        tabs_context[i].className = 'show';
         for(let j=0;j<$(this).siblings().length;j++){
             $(this).siblings()[j].className = '';
-            $(tabs_context[i]).siblings()[j].className = 'hidden';
         }
     })
 })();

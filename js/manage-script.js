@@ -1,6 +1,4 @@
 (function () {
-    let url = "http://10.117.70.237:8080/sms/get/";
-
 
     /**
      * @auther xubowei
@@ -20,7 +18,9 @@
     // let text=$("#school").spinnerBox("getText");
 /**
  * @auther xubowei
- * **************************************************************************** bug： ajax数据无法渲染到页面上 ********************************************************************************************************
+ * **************************************************************************** bug： ajax数据无法渲染到页面上 *********************************************************************************************************
+ * *********************************************************************** 解决方法： 可以使用取消元素class的timer属性 **************************************************************************************************
+ * ******************************************************************************* 但是元素就无法从0开始计数 ***********************************************************************************************************
  * */
     let wait;
     let studying;
@@ -34,12 +34,20 @@
             // console.log(result);
             if(result.isSuccess){
                 wait = result.Data.wait;
-                $('.wrapper .row .col-lg-3 .panel .value .timer')[0].innerText = 132;
+                studying = result.Data.studying;
+                away = result.Data.away;
+                studied = result.Data.studyed;
+                $('.wrapper .row .col-lg-3 .panel .value h1')[0].innerText = wait;
+                $('.wrapper .row .col-lg-3 .panel .value h1')[1].innerText = studying;
+                $('.wrapper .row .col-lg-3 .panel .value h1')[2].innerText = away;
+                $('.wrapper .row .col-lg-3 .panel .value h1')[3].innerText = studied;
                 // console.log($($('.wrapper .row .col-lg-3 .panel .value .timer')[0]).html());
         }
         }
     });
     // console.log(wait);
+
+    // console.log($('.wrapper .row .col-lg-3 .panel .value h1')[0].innerText);
 /**
  * *************************************************************************************** end **********************************************************************************************************************
  * */
@@ -152,7 +160,7 @@
                 if(result.isSuccess){
                     // resultdata = result.Data;
 
-                    setCharts(result.Data.day,transform(result.Data.number));
+                    setCharts(result.Data.day,result.Data.number);
                 }
 
             }
@@ -175,159 +183,68 @@
  * @auther xubowei
  * 表格
  * */
-    // (function () {
-    //     let dataSet = [
-    //         {
-    //             "student_id": "185",
-    //             "student_code": "HZ2399928",
-    //             "student_name": "小明",
-    //             "grade_id": "106",
-    //             "grade_code": "TFB018",
-    //             "grade_name": "TOEFL中级班（美高预备二阶）",
-    //             "grade_report_date": "2018-01-18 00:00:00.0",
-    //             "grade_begin_date": "2018-01-18 00:00:00.0",
-    //             "grade_end_date": "2018-01-18 00:00:00.0",
-    //             "grade_order": "60",
-    //             "student_admin_name": null,
-    //             "class_away": 70,
-    //             "class_away_wait": 68,
-    //             "school_name": null
-    //         }
-    //     ];
-    //     $('#lessonStartReminding').dataTable( {
-    //         searching: false,
-    //         scrollCollapse: true,
-    //         scrollY: 240,
-    //         paging: false,
-    //         data: dataSet,
-    //         columns: [
-    //             { title: "学生姓名",data: "student_id" },
-    //             { title: "学号",data: "student_code" },
-    //             { title: "班级编码",data: "student_name"},
-    //             { title: "班级名称",data: "grade_id" },
-    //             { title: "校区",data: "grade_code" },
-    //             { title: "开课日期",data: "grade_name" },
-    //             { title: "结束日期",data: "grade_report_date"},
-    //             { title: "总课时",data: "grade_begin_date"},
-    //             { title: "剩余课时",data: "grade_end_date"},
-    //             { title: "学管",data: "grade_order"},
-    //             { title: "顾问",data: "student_admin_name"},
-    //             { title: "操作",data: "class_away"},
-    //             { title: "123",data: "class_away_wait"},
-    //             { title: "123",data: "school_name"}
-    //         ],
-    //         columnDefs: [
-    //             {targets: 0, orderable: false},
-    //             {targets: 1, orderable: false},
-    //             {targets: 3, orderable: false},
-    //             {targets: 4, orderable: false},
-    //             {targets: 9, orderable: false},
-    //             {targets: 10, orderable: false},
-    //             {targets: 11, orderable: false}
-    //         ]
-    //     });
-    // })();
+    let table;
+    let tab = $('.wrapper .panel .table-response ul > .active ');
+    getTableData(tab[0].id);                                                                                            //初始化表格
 
 
-    function setlessonStartReminding(data) {
-        $('#lessonStartReminding').dataTable( {
-            searching: false,
-            // scrollCollapse: true,
-            // scrollY: 240,
-            // paging: false,
+    let tabs = $('.wrapper .panel .table-response ul > li ');
+    function renderTable(data) {
+
+        table = $('#table').DataTable({
             data: data,
+            destroy: true,
+            searching: false,
+            scrollY: '200',
+            scrollCollapse: true,
+            paging: false,
             columns: [
-                { title: "学生姓名",data: "student_name" },
-                { title: "学号",data: "student_code" },
-                { title: "班级编码",data: "grade_code"},
-                { title: "班级名称",data: "grade_name" },
-                { title: "校区",data: "school_name" },
-                { title: "开课日期",data: "grade_begin_date" },
-                { title: "结束日期",data: "grade_end_date"},
-                { title: "总课时",data: "class_away"},
-                { title: "剩余课时",data: "class_away_wait"},
-                { title: "学管",data: "student_admin_name"},
-                { title: "顾问",data: "student_admin_name"},
-                { title: "操作",data: "grade_order"},
-            ],
-            columnDefs: [
-                {targets: 0, orderable: false},
-                {targets: 1, orderable: false},
-                {targets: 3, orderable: false},
-                {targets: 4, orderable: false},
-                {targets: 9, orderable: false},
-                {targets: 10, orderable: false},
-                {targets: 11, orderable: false}
+                {title: 'student_id',data: 'student_id'},
+                {title: 'student_code',data: 'student_code'},
+                {title: 'student_name',data: 'student_name'},
+                {title: 'grade_id',data: 'grade_id'},
+                {title: 'grade_code',data: 'grade_code'},
+                {title: 'grade_name',data: 'grade_name'},
+                {title: 'grade_report_date',data: 'grade_report_date'},
+                {title: 'grade_begin_date',data: 'grade_begin_date'},
+                {title: 'grade_end_date',data: 'grade_end_date'},
+                {title: 'grade_order',data: 'grade_order'},
+                {title: 'student_admin_name',data: 'student_admin_name'},
+                {title: 'class_away',data: 'class_away'},
+                {title: 'class_away_wait',data: 'class_away_wait'},
+                {title: 'school_name',data: 'school_name'},
             ]
         });
-    }
-    function getlessonStartReminding() {
-        $.ajax({
-            url: url + 'test3',
-            type: 'get',
-            success: function (result) {
-                if(result.isSuccess){
-                    console.log(result);
-                    setlessonStartReminding(result.Data);
-                }
-            }
+        table.on("click",'tr',function () {
+            console.log( table.row( this ).data());
         })
     }
-    function setlessonEndReminding(data) {
-        $('#lessonEndReminding').dataTable( {
-            searching: false,
-            // scrollCollapse: true,
-            // scrollY: 240,
-            // paging: false,
-            data: data,
-            columns: [
-                { title: "学生姓名",data: "student_name" },
-                { title: "学号",data: "student_code" },
-                { title: "班级编码",data: "grade_code"},
-                { title: "班级名称",data: "grade_name" },
-                { title: "校区",data: "school_name" },
-                { title: "开课日期",data: "grade_begin_date" },
-                { title: "结束日期",data: "grade_end_date"},
-                { title: "总课时",data: "class_away"},
-                { title: "剩余课时",data: "class_away_wait"},
-                { title: "学管",data: "student_admin_name"},
-                { title: "顾问",data: "student_admin_name"},
-                { title: "操作",data: "grade_order"},
-            ],
-            columnDefs: [
-                {targets: 0, orderable: false},
-                {targets: 1, orderable: false},
-                {targets: 3, orderable: false},
-                {targets: 4, orderable: false},
-                {targets: 9, orderable: false},
-                {targets: 10, orderable: false},
-                {targets: 11, orderable: false}
-            ]
-        });
-    }
-    function getlessonEndReminding() {
-        $.ajax({
-            url: url + 'test4',
-            type: 'get',
-            success: function (result) {
-                if(result.isSuccess){
-                    console.log(result);
-                    setlessonEndReminding(result.Data);
+    function getTableData(id){
+        let test;
+        let data;
+        if(id === 'StartReminding'){
+            test = 'test3';
+        }
+        if(id === 'EndReminding'){
+            test = 'test4';
+        }
+        // console.log(id);
+        if(id){
+            $.ajax({
+                url: url + test,
+                type: 'get',
+                success: function (result) {
+                    if(result.isSuccess){
+                        data = result.Data;
+                        renderTable(data);
+                    }
                 }
-            }
-        })
+            });
+        }
+
     }
-    getlessonStartReminding();
-    getlessonEndReminding();
-
-
-
-
-
-
-
-
-
-
+    tabs.click(function () {
+        getTableData($(this)[0].id);
+    });
 
 })();
