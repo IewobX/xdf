@@ -1,4 +1,4 @@
-let url = "http://10.117.70.138:8080/sms/get/";
+let url = "http://10.117.71.69:8080/sms/get/";
 /**
  * @author xubowei
  * 下拉列表*/

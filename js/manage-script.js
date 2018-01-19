@@ -101,20 +101,7 @@
  * @author xubowei
  * 图表
  * */
-    function transform(arr){
-        /**
-         * @author xubowei
-         * 数组转化
-         * */
-        let i;
-        for(i=0;arr[i]===0;i++){
-            arr[i] = NaN;
-        }
-        for(i=arr.length-1;arr[i]===0;i--){
-            arr[i] = NaN;
-        }
-        return arr;
-    }
+
     function setCharts(day,number) {
         /**
          * @author xubowei
@@ -150,7 +137,6 @@
         let chart = Highcharts.chart('container', options);
     }
     function getChartsData(year,month) {
-        let resultdata;
         $.ajax({
             url: url + 'test2',
             type: "post",
@@ -158,7 +144,6 @@
             data: {"year": year,"month": month},
             success: function (result) {
                 if(result.isSuccess){
-                    // resultdata = result.Data;
 
                     setCharts(result.Data.day,result.Data.number);
                 }

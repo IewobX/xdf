@@ -387,9 +387,9 @@
             <div class="row me-nav">
                 <div class="row col-md-8">
                     <div class="clearfix">
-                        <div class="choose- fl">
+                        <div class="choose- fl" id="grade_id">
                             <div class="select">
-                                <span class="lesson">班级编码</span>
+                                <span class="selected">班级编码</span>
                                 <span class="down"></span>
                             </div>
                             <ul class="option hidden">
@@ -398,24 +398,24 @@
                                 <li class="option-item">TFB003</li>
                             </ul>
                         </div>
-                        <div class="choose- fl">
+                        <div class="choose- fl" id="subject">
                             <div class="select">
-                                <span class="schoolArea">科目</span>
+                                <span class="selected">科目</span>
                                 <span class="down"></span>
                             </div>
-                            <ul class="option hidden">
+                            <ul class="option hidden" >
                                 <li class="option-item">口语</li>
                                 <li class="option-item">听力</li>
                                 <li class="option-item">朗读</li>
                                 <li class="option-item">写作</li>
                             </ul>
                         </div>
-                        <div class="choose- fl">
+                        <div class="choose- fl" id="type">
                             <div class="select">
-                                <span class="schoolArea">成绩类型</span>
+                                <span class="selected">成绩类型</span>
                                 <span class="down"></span>
                             </div>
-                            <ul class="option hidden">
+                            <ul class="option hidden" >
                                 <li class="option-item">入门测</li>
                                 <li class="option-item">出门测</li>
                                 <li class="option-item">TOP模考</li>
@@ -440,10 +440,8 @@
                             <li class="active">批改作业</li>
                             <li>批改试卷</li>
                         </ul>
-                        <div class="tabs">
-                            <div class="hidden"><table id="learningeedback" class="table table-striped table-bordered" cellspacing="0" width="100%"></table></div>
-                            <div class="show"><table id="correctingHomework" class="table table-striped table-bordered" cellspacing="0" width="100%"></table></div>
-                            <div class="hidden"><table id="correctPaper" class="table table-striped table-bordered" cellspacing="0" width="100%"></table></div>
+                        <div class="table-container">
+                            <table id="table"></table>
                         </div>
 
                     </div>
