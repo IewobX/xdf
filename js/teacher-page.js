@@ -167,22 +167,29 @@
             type: 'get',
             data: {year: year,month: month},
             success: function (result) {
-                console.log(result)
                 if(result.isSuccess){
                     renderCalendar(result.Data);
                 }
             }
         })
     }
-    getcalendarData(2018,1);
-
-    // let calendar;
-    // (function () {
-    //     calendar = $('#calendar').calendar({
-    //         width: 320,
-    //         height: 320,
-    //     })
-    // })();
+    getcalendarData(new Date().getFullYear(),new Date().getMonth()+1);
+/**
+ * */
+$.ajax({
+    url: url + 'test8',
+    type: 'get',
+    success: function (result) {
+        if(result.isSuccess){
+            let data = result.Data.length;
+            if(data){
+                console.log(data);
+                $('#LearningFeedback span')[0].className = 'badge bg-primary';
+                $('#LearningFeedback span')[0].innerHTML = data;
+            }
+        }
+    }
+});
 
 /**
  * @author xubowei
@@ -215,10 +222,27 @@ function renderTable(data) {
             {title: 'management_name',data: 'management_name'},
             {title: 'course_name',data: 'course_name'},
             {title: 'school_name',data: 'school_name'},
+            {title: '操作'}
+        ],
+        columnDefs: [
+            {
+                render: function ( data, type, row ) {
+                    let date = new Date(data);
+                    return date.getFullYear()+'/'+date.getMonth()+1+'/'+date.getDate();
+                },
+                targets: 10
+            },
+            {
+                targets: 14,
+                data: null,
+                defaultContent: "<a href='#' class='my-link'>批改</a>"
+            }
         ]
+
     });
-    table.on("click",'tr',function () {
-        console.log( table.row( this ).data());
+    table.on("click",'tr td:last-child',function () {
+        let data = table.row( this ).data();
+
     })
 }
     function getTableData(){

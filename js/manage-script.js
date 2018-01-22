@@ -165,55 +165,106 @@
     $('.wrapper .me-nav .choose-date .prev').click(Dramatize);
     $('.wrapper .me-nav .choose-date .next').click(Dramatize);
 /**
+ * @author xubowei
+ * 标签页的徽章
+ * */
+    $.ajax({
+        url: url + 'test3',
+        type: 'get',
+        success: function (result) {
+            if(result.isSuccess){
+                let data = result.Data.length;
+
+                if(data){
+                    console.log(data);
+                    $('#StartReminding span')[0].className = 'badge bg-primary';
+                    $('#StartReminding span')[0].innerHTML = data;
+                }
+            }
+        }
+    });
+    $.ajax({
+        url: url + 'test4',
+        type: 'get',
+        success: function (result) {
+            if(result.isSuccess){
+                let data = result.Data.length;
+
+                if(data){
+                    console.log(data);
+                    $('#EndReminding span')[0].className = 'badge bg-primary';
+                    $('#EndReminding span')[0].innerHTML = data;
+                }
+            }
+        }
+    });
+/**
  * @auther xubowei
  * 表格
  * */
     let table;
     let tab = $('.wrapper .panel .table-response ul > .active ');
     getTableData(tab[0].id);                                                                                            //初始化表格
-
-
     let tabs = $('.wrapper .panel .table-response ul > li ');
-    function renderTable(data) {
-
+    function renderTable(data,columns) {
         table = $('#table').DataTable({
             data: data,
             destroy: true,
             searching: false,
+
+            scrollX: true,
             scrollY: '200',
             scrollCollapse: true,
             paging: false,
-            columns: [
-                {title: 'student_id',data: 'student_id'},
-                {title: 'student_code',data: 'student_code'},
-                {title: 'student_name',data: 'student_name'},
-                {title: 'grade_id',data: 'grade_id'},
-                {title: 'grade_code',data: 'grade_code'},
-                {title: 'grade_name',data: 'grade_name'},
-                {title: 'grade_report_date',data: 'grade_report_date'},
-                {title: 'grade_begin_date',data: 'grade_begin_date'},
-                {title: 'grade_end_date',data: 'grade_end_date'},
-                {title: 'grade_order',data: 'grade_order'},
-                {title: 'student_admin_name',data: 'student_admin_name'},
-                {title: 'class_away',data: 'class_away'},
-                {title: 'class_away_wait',data: 'class_away_wait'},
-                {title: 'school_name',data: 'school_name'},
+            columns: columns,
+            columnDefs: [
+                {
+                    render: function ( data, type, row ) {
+                        let date = new Date(data);
+                        return date.getFullYear()+'/'+date.getMonth()+1+'/'+date.getDate();
+                    },
+                    targets: 10
+                },
+                {
+                    targets: 14,
+                    data: null,
+                    defaultContent: "<a class='my-link'>查看</a>"
+                }
             ]
         });
-        table.on("click",'tr',function () {
+
+        table.on("click",'tr td:last-child',function () {
             console.log( table.row( this ).data());
         })
     }
+
     function getTableData(id){
-        let test;
         let data;
+        let columns = [];
+        let test;
         if(id === 'StartReminding'){
             test = 'test3';
         }
         if(id === 'EndReminding'){
             test = 'test4';
         }
-        // console.log(id);
+        // if(id ==='ExamReminding' ){
+        //     test = '';
+        // }
+        // if(id ==='Warning' ){
+        //     test = '';
+        //     $.ajax({
+        //         url: url + '',
+        //         type: 'get',
+        //         success: function (result) {
+        //             if(result.isSuccess){
+        //                 data = result.Data;
+        //                 renderTable(data);
+        //             }
+        //         }
+        //     })
+        // }
+
         if(id){
             $.ajax({
                 url: url + test,
@@ -221,11 +272,29 @@
                 success: function (result) {
                     if(result.isSuccess){
                         data = result.Data;
-                        renderTable(data);
+
+                        columns = [
+                            {title: 'student_id',data: result.Data.student_id},
+                            {title: 'student_code',data: result.Data.student_code},
+                            {title: 'student_name',data: result.Data.student_name},
+                            {title: 'grade_id',data: result.Data.grade_id},
+                            {title: 'grade_code',data: result.Data.grade_code},
+                            {title: 'grade_name',data: result.Data.grade_name},
+                            {title: 'grade_report_date',data: result.Data.grade_report_date},
+                            {title: 'grade_begin_date',data: result.Data.grade_begin_date},
+                            {title: 'grade_end_date',data: result.Data.grade_end_date},
+                            {title: 'grade_order',data: result.Data.grade_order},
+                            {title: 'student_admin_name',data: result.Data.student_admin_name},
+                            {title: 'class_away',data: result.Data.class_away},
+                            {title: 'class_away_wait',data: result.Data.class_away_wait},
+                            {title: 'school_name',data: result.Data.school_name},
+                        ];
+                        renderTable(data,columns);
                     }
                 }
-            });
+            })
         }
+
 
     }
     tabs.click(function () {

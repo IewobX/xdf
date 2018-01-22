@@ -1,4 +1,4 @@
-let url = "http://10.117.71.69:8080/sms/get/";
+let url = "http://10.117.2.7:8080/sms/get/";
 /**
  * @author xubowei
  * 下拉列表*/
@@ -33,6 +33,7 @@ let url = "http://10.117.71.69:8080/sms/get/";
 (function() {
     let tabs = $('.wrapper .panel .table-response ul > li ');
     tabs.click(function () {
+        $(this).children('span')[0].className = 'badge bg-primary hidden';
         let i = $(this).index();
         tabs[i].className = 'active';
         for(let j=0;j<$(this).siblings().length;j++){

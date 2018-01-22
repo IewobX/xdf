@@ -24,7 +24,7 @@
     <link href="css/style.css" rel="stylesheet">
     <link href="css/style-responsive.css" rel="stylesheet">
 
-    <link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" type="text/css">
+
 
     <link href="css/calendar.css" rel="stylesheet" type="text/css">
 
@@ -436,20 +436,18 @@
                 <section class="panel">
                     <div class="table-response" id="_taps">
                         <ul class="tabs">
-                            <li>学情反馈</li>
-                            <li class="active">批改作业</li>
-                            <li>批改试卷</li>
+                            <li id="LearningFeedback" class="active">学情反馈<span class="badge bg-primary hidden"></span></li>
+                            <li id="CorrectHomeword">批改作业<span class="badge bg-primary hidden"></span></li>
+                            <li id="CorrectPaper">批改试卷<span class="badge bg-primary hidden"></span></li>
                         </ul>
                         <div class="table-container">
                             <table id="table"></table>
                         </div>
-
                     </div>
-
-
                 </section>
             </div>
         </div>
+
     </div>
 </section>
 
@@ -523,27 +521,27 @@
 <script src="js/owl.carousel.js"></script>
 <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript">
-    $(document).ready(function() {
-
-        //countTo
-
-        $('.timer').countTo();
-
-        //owl carousel
-
-        $("#news-feed").owlCarousel({
-            slideSpeed : 300,
-            navigation : true,
-            paginationSpeed : 400,
-            singleItem : true,
-            autoPlay:true
-        });
-    });
-
-    $(window).on("resize",function(){
-        let owl = $("#news-feed").data("owlCarousel");
-        owl.reinit();
-    });
+    // $(document).ready(function() {
+    //
+    //     //countTo
+    //
+    //     $('.timer').countTo();
+    //
+    //     //owl carousel
+    //
+    //     $("#news-feed").owlCarousel({
+    //         slideSpeed : 300,
+    //         navigation : true,
+    //         paginationSpeed : 400,
+    //         singleItem : true,
+    //         autoPlay:true
+    //     });
+    // });
+    //
+    // $(window).on("resize",function(){
+    //     let owl = $("#news-feed").data("owlCarousel");
+    //     owl.reinit();
+    // });
 
 
 </script>

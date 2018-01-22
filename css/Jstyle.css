@@ -237,3 +237,19 @@ table{
     border-bottom: none;
 
 }
+/**
+ * @author xubowei
+ * 按钮样式
+ */
+.my-link{
+    display: inline-block;
+    height: 24px;
+    width: 50px;
+    background: #43d396;
+    color: #f1f1f1;
+    border: 1px solid transparent;
+    border-radius: 12px;
+}
+.my-link:hover {
+    color: #fff;
+}
