@@ -1,5 +1,8 @@
 (function () {
-
+/**
+ * @author xubowei
+* url 定义在Jscript.js文件中
+ * */
 
 
 /**
@@ -141,13 +144,13 @@
  * @auther xubowei
  * 日历
  * */
-    let calendar;
-    (function () {
-        calendar = $('#calendar').calendar({
-            width: 320,
-            height: 320,
-        })
-    })();
+    // let calendar;
+    // (function () {
+    //     calendar = $('#calendar').calendar({
+    //         width: 320,
+    //         height: 320,
+    //     })
+    // })();
 
     function renderCalendar(data) {
         // console.log(data);
@@ -164,6 +167,7 @@
             type: 'get',
             data: {year: year,month: month},
             success: function (result) {
+                console.log(result)
                 if(result.isSuccess){
                     renderCalendar(result.Data);
                 }
@@ -172,6 +176,13 @@
     }
     getcalendarData(2018,1);
 
+    // let calendar;
+    // (function () {
+    //     calendar = $('#calendar').calendar({
+    //         width: 320,
+    //         height: 320,
+    //     })
+    // })();
 
 /**
  * @author xubowei
@@ -183,7 +194,10 @@ function renderTable(data) {
         data: data,
         destroy: true,
         searching: false,
-        scrollY: '200',
+
+
+        scrollX: true,
+        scrollY: '250px',
         scrollCollapse: true,
         paging: false,
         columns: [

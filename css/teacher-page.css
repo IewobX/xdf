@@ -32,3 +32,9 @@
 .week{
     padding: 0;
 }
+.calendar-ct .week{
+    width: 321px !important;
+}
+.calendar-ct .date-items .days{
+    width: 321px !important;
+}
