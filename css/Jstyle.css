@@ -200,6 +200,23 @@ table{
     background: url("../img/next.png") 8px 8px no-repeat;
 }
 
+.wrapper .me-nav .btn-group{
+    float: left;
+    margin: 0 0 15px 15px;
+
+}
+.wrapper .me-nav .btn-group .btn{
+    width: 200px;
+}
+.wrapper .me-nav .btn-group .btn .caret{
+    float: right;
+    margin-top: 8px;
+}
+.wrapper .me-nav .btn-group .dropdown-menu{
+    height: 200px;
+    overflow: auto;
+
+}
 /**
  * @auther xubowei
  * 下边的标签页
@@ -241,7 +258,7 @@ table{
  * @author xubowei
  * 按钮样式
  */
-.my-link{
+.my-button{
     display: inline-block;
     height: 24px;
     width: 50px;
@@ -252,4 +269,11 @@ table{
 }
 .my-link:hover {
     color: #fff;
+}
+/**
+ *@author xubowei
+ *表格样式
+ * */
+table{
+    width: 100% !important;
 }

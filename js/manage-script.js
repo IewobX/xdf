@@ -1,21 +1,13 @@
 (function () {
 
-    /**
-     * @auther xubowei
-     *
-     * 下拉列表控件
-     *
-     * */
-    // let dic_version;
-    // let dic_data;
-    // $.getJSON('json/dic.json',function (result) {
-    //     dic_data = result;
-    //     // console.log(dic_data);
-    //     window.localStorage.dic_data = JSON.stringify(result);
-    // });
-    // $("#school").spinnerBox({controlCode:"school",placeholderText:"学校"});
-    // let value=$("#school").spinnerBox("getValue");
-    // let text=$("#school").spinnerBox("getText");
+/**
+ * @auther xubowei
+ *
+ * 下拉列表控件
+ *
+ * */
+
+    $("#school").spinnerBox({url:"http://10.117.2.7:8080/sms/spinner/school",placeholderText:"学校",defaultValue:1});
 /**
  * @auther xubowei
  * **************************************************************************** bug： ajax数据无法渲染到页面上 *********************************************************************************************************
@@ -207,6 +199,7 @@
     getTableData(tab[0].id);                                                                                            //初始化表格
     let tabs = $('.wrapper .panel .table-response ul > li ');
     function renderTable(data,columns) {
+        $.fn.dataTable.tables( {visible: true, api: true} ).columns.adjust();
         table = $('#table').DataTable({
             data: data,
             destroy: true,
@@ -223,14 +216,34 @@
                         let date = new Date(data);
                         return date.getFullYear()+'/'+date.getMonth()+1+'/'+date.getDate();
                     },
-                    targets: 10
+                    targets: 8
+                },
+                {
+                    render: function ( data, type, row ) {
+                        let date = new Date(data);
+                        return date.getFullYear()+'/'+date.getMonth()+1+'/'+date.getDate();
+                    },
+                    targets: 9
                 },
                 {
                     targets: 14,
                     data: null,
                     defaultContent: "<a class='my-link'>查看</a>"
                 }
-            ]
+                // {
+                //     visible: false, targets: 0
+                // },
+                // {
+                //     visible: false, targets: 3
+                // },
+                // {
+                //     visible: false, targets: 7
+                // },
+                // {
+                //     visible: false, targets: 10
+                // }
+            ],
+
         });
 
         table.on("click",'tr td:last-child',function () {
@@ -274,20 +287,20 @@
                         data = result.Data;
 
                         columns = [
-                            {title: 'student_id',data: result.Data.student_id},
-                            {title: 'student_code',data: result.Data.student_code},
-                            {title: 'student_name',data: result.Data.student_name},
-                            {title: 'grade_id',data: result.Data.grade_id},
-                            {title: 'grade_code',data: result.Data.grade_code},
-                            {title: 'grade_name',data: result.Data.grade_name},
-                            {title: 'grade_report_date',data: result.Data.grade_report_date},
-                            {title: 'grade_begin_date',data: result.Data.grade_begin_date},
-                            {title: 'grade_end_date',data: result.Data.grade_end_date},
-                            {title: 'grade_order',data: result.Data.grade_order},
-                            {title: 'student_admin_name',data: result.Data.student_admin_name},
-                            {title: 'class_away',data: result.Data.class_away},
-                            {title: 'class_away_wait',data: result.Data.class_away_wait},
-                            {title: 'school_name',data: result.Data.school_name},
+                            // {title: '学生id',data: result.Data.student_id},
+                            {title: '学生姓名',data: result.Data.student_name},
+                            {title: '学号',data: result.Data.student_code},
+                            // {title: '班级id',data: result.Data.grade_id},
+                            {title: '班级编码',data: result.Data.grade_code},
+                            {title: '班级名称',data: result.Data.grade_name},
+                            {title: '校区',data: result.Data.school_name},
+                            // {title: '报名日期',data: result.Data.grade_report_date},
+                            {title: '开课日期',data: result.Data.grade_begin_date},
+                            {title: '结课日期',data: result.Data.grade_end_date},
+                            // {title: '班级order',data: result.Data.grade_order},
+                            {title: '总课时',data: result.Data.class_away},
+                            {title: '剩余课时',data: result.Data.class_away_wait},
+                            {title: '学管',data: result.Data.student_admin_name},
                         ];
                         renderTable(data,columns);
                     }
