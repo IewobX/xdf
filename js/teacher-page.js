@@ -143,23 +143,11 @@
  * @auther xubowei
  * 日历
  * */
-    // let calendar;
-    // (function () {
-    //     calendar = $('#calendar').calendar({
-    //         width: 320,
-    //         height: 320,
-    //     })
-    // })();
-
     function renderCalendar(data) {
-        // console.log(data);
-        $('#calendar').calendar({
-            width: 320,
-            height: 320,
-            data: data
-        })
+        $('#calendar').calendar({});
+
     }
-    function getcalendarData(year,month) {
+    function getCalendarData(year,month) {
 
         $.ajax({
             url: url + 'test6',
@@ -168,11 +156,40 @@
             success: function (result) {
                 if(result.isSuccess){
                     renderCalendar(result.Data);
+                    $('#calendar').calendar("setData",result.Data);
                 }
             }
         })
     }
-    getcalendarData(new Date().getFullYear(),new Date().getMonth()+1);
+    getCalendarData(new Date().getFullYear(),new Date().getMonth()+1);
+    setTimeout(function () {
+        // console.log($('#calendar').children('.calendar-inner'));
+        $('#calendar .calendar-inner .calendar-views .view-date .calendar-hd .calendar-arrow .prev').click(function () {
+            let year = $(this).parent().siblings('a')[0].innerText.slice(0,4);
+            let month = $(this).parent().siblings('a').children('span')[0].innerText;
+            if(month !== '1'){
+                month = month-1
+            }
+            if(month === '1'){
+                month = '12';
+                year -= 1;
+            }
+            getCalendarData(year,month);
+        });
+        $('#calendar .calendar-inner .calendar-views .view-date .calendar-hd .calendar-arrow .next').click(function () {
+            let year = $(this).parent().siblings('a')[0].innerText.slice(0,4);
+            let month = $(this).parent().siblings('a').children('span')[0].innerText;
+            if(month !== '12'){
+                month = parseInt(month)+1
+            }
+            if(month === '12'){
+                month = '1';
+                year = parseInt(year)+1;
+            }
+            getCalendarData(year,month);
+        });
+    },100);
+
 /**
  * @author xubowei
  * 标签页的徽章
@@ -210,7 +227,6 @@
             data: data,
             destroy: true,
             searching: false,
-
             scrollX: true,
             scrollY: '250px',
             scrollCollapse: true,
@@ -231,10 +247,20 @@
                 $('#myModal').data('student_id',data.student_id);
                 $('#class-time').html(date.getFullYear()+'-'+(date.getMonth()+1)+"-"+date.getDate()+'&nbsp;'+data.course_begin_time+'-'+data.course_end_time);
             }
-
+            if(id === 'CorrectHomeword'){
+                window.location.href = "course/get/homeWork/page/" + row.id + '/' + row.course_id + "/" + row.student_id + "/" + 1;
+            }
+            if(id === 'CorrectPaper'){
+                window.open("auth/get/teacher/read/paper/" + row.student_id + "," + row.course_paper_id + "," + row.student_name + "," + 1);
+            }
 
         });
     }
+
+    /**
+     * @author xubowei
+     * 学情反馈点击批改后的列表提交
+     * */
     $('.modal .modal-dialog .modal-content .modal-footer .btn-primary').click(function () {
         let data={};
         data.condition_manifestation = 1;
@@ -242,7 +268,6 @@
         data.condition_comment = $('#classSummary').val();
         data.course_id = $("#myModal").data("course_id");
         data.student_id = $("#myModal").data("student_id");
-        // $.post()
         location.reload();
         // $.ajax({
         //     url: url +  'auth/save/class/condition',
@@ -273,12 +298,8 @@
                     if(result.isSuccess){
                         data = result.Data;
                         columns = [
-                            {title: 'condition_id',data: 'condition_id'},
-                            {title: 'student_id',data: 'student_id'},
                             {title: '学生姓名',data: 'student_name'},
                             {title: '学号',data: 'student_code'},
-                            {title: 'condition_check',data: 'condition_check'},
-                            {title: 'condition_comment',data: 'condition_comment'},
                             {title: '班级编码',data: 'grade_code'},
                             {title: '班级名称',data: 'grade_name'},
                             {title: '课程名称',data: 'course_name'},
@@ -287,7 +308,11 @@
                             {title: '下课时间',data: 'course_end_time'},
                             {title: '上课地点',data: 'school_name'},
                             {title: '学管',data: 'management_name'},
-                            {title: '操作'}
+                            {title: 'condition_id',data: 'condition_id'},
+                            {title: 'student_id',data: 'student_id'},
+                            {title: 'condition_check',data: 'condition_check'},
+                            {title: 'condition_comment',data: 'condition_comment'},
+                            {title: '操作'},
                         ];
                         columnsDefs = [
                             {
@@ -309,19 +334,7 @@
                                 defaultContent: "<button class='my-button' data-toggle='modal' data-target='#myModal'>批改</button>"
                             },
                             {
-                                visible: false, targets: 0
-                            },
-                            {
-                                visible: false, targets: 1
-                            },
-                            {
-                                visible: false, targets: 4
-                            },
-                            {
-                                visible: false, targets: 5
-                            },
-                            {
-                                visible: false, targets: 11
+                                visible: false, targets: [10,11,12,13]
                             }
                         ];
                         renderTable(data,columns,columnsDefs);
@@ -329,170 +342,131 @@
                 }
             });
         }
-        // if(id === 'CorrectHomeword'){
-        //     test = 'course/get/homeWork/list';
-        //     $.ajax({
-        //         url: url + test,
-        //         type: 'get',
-        //         success: function (result) {
-        //             if(result.isSuccess){
-        //                 data = result.Data;
-        //                 columns = [
-        //                     {title: 'condition_id',data: 'condition_id'},
-        //                     {title: 'student_id',data: 'student_id'},
-        //                     {title: '学生姓名',data: 'student_name'},
-        //                     {title: '学号',data: 'student_code'},
-        //                     {title: 'condition_check',data: 'condition_check'},
-        //                     {title: 'condition_comment',data: 'condition_comment'},
-        //                     {title: '班级编码',data: 'grade_code'},
-        //                     {title: '班级名称',data: 'grade_name'},
-        //                     {title: '课程名称',data: 'course_name'},
-        //                     {title: '上课日期',data: 'course_date'},
-        //                     {title: '上课时间',data: 'course_begin_time'},
-        //                     {title: '下课时间',data: 'course_end_time'},
-        //                     {title: '上课地点',data: 'school_name'},
-        //                     {title: '学管',data: 'management_name'},
-        //                     {title: '操作'}
-        //                 ];
-        //                 columnsDefs = [
-        //                     {
-        //                         render: function ( data, type, row ) {
-        //                             let date = new Date(data);
-        //                             return date.getFullYear()+'/'+date.getMonth()+1+'/'+date.getDate();
-        //                         },
-        //                         targets: 9
-        //                     },
-        //                     {
-        //                         render: function ( data, type, row ) {
-        //                             return data + '-' +row.course_end_time;
-        //                         },
-        //                         targets: 10
-        //                     },
-        //                     {
-        //                         targets: columns.length-1,
-        //                         data: null,
-        //                         defaultContent: "<a href='javascript: void(0);' class='my-link'>批改</a>"
-        //                     },
-        //                     {
-        //                         visible: false, targets: 0
-        //                     },
-        //                     {
-        //                         visible: false, targets: 1
-        //                     },
-        //                     {
-        //                         visible: false, targets: 4
-        //                     },
-        //                     {
-        //                         visible: false, targets: 5
-        //                     },
-        //                     {
-        //                         visible: false, targets: 11
-        //                     }
-        //                 ];
-        //                 renderTable(data,columns,columnsDefs);
-        //             }
-        //         }
-        //     });
-        // }
-        // if(id === 'CorrectPaper'){
-        //    test = 'auth/get/teacher/correct/paper/list';
-        //     $.ajax({
-        //         url: url + test,
-        //         type: 'get',
-        //         success: function (result) {
-        //             if(result.isSuccess){
-        //                 data = result.Data;
-        //                 columns = [
-        //                     {title: 'condition_id',data: 'condition_id'},
-        //                     {title: 'student_id',data: 'student_id'},
-        //                     {title: '学生姓名',data: 'student_name'},
-        //                     {title: '学号',data: 'student_code'},
-        //                     {title: 'condition_check',data: 'condition_check'},
-        //                     {title: 'condition_comment',data: 'condition_comment'},
-        //                     {title: '班级编码',data: 'grade_code'},
-        //                     {title: '班级名称',data: 'grade_name'},
-        //                     {title: '课程名称',data: 'course_name'},
-        //                     {title: '上课日期',data: 'course_date'},
-        //                     {title: '上课时间',data: 'course_begin_time'},
-        //                     {title: '下课时间',data: 'course_end_time'},
-        //                     {title: '上课地点',data: 'school_name'},
-        //                     {title: '学管',data: 'management_name'},
-        //                     {title: '操作'}
-        //                 ];
-        //                 columnsDefs = [
-        //                     {
-        //                         render: function ( data, type, row ) {
-        //                             let date = new Date(data);
-        //                             return date.getFullYear()+'/'+date.getMonth()+1+'/'+date.getDate();
-        //                         },
-        //                         targets: 9
-        //                     },
-        //                     {
-        //                         render: function ( data, type, row ) {
-        //                             return data + '-' +row.course_end_time;
-        //                         },
-        //                         targets: 10
-        //                     },
-        //                     {
-        //                         targets: columns.length-1,
-        //                         data: null,
-        //                         defaultContent: "<a href='javascript: void(0);' class='my-link'>批改</a>"
-        //                     },
-        //                     {
-        //                         visible: false, targets: 0
-        //                     },
-        //                     {
-        //                         visible: false, targets: 1
-        //                     },
-        //                     {
-        //                         visible: false, targets: 4
-        //                     },
-        //                     {
-        //                         visible: false, targets: 5
-        //                     },
-        //                     {
-        //                         visible: false, targets: 11
-        //                     }
-        //                 ];
-        //                 renderTable(data,columns,columnsDefs);
-        //             }
-        //         }
-        //     });
-        // }
+        if(id === 'CorrectHomeword'){
+            let data = {};
+            data.correct_state =1;
+            data.start_date = new Date();
+            data.end_date = new Date();
+            test = 'course/get/homeWork/list';
+            $.ajax({
+                url: url + test,
+                type: 'post',
+                contentType: "application/json",
+                dataType: "json",
+                data: JSON.stringify(data),
+                success: function (result) {
+                    if(result.isSuccess){
+                        data = result.Data;
+                        columns = [
+                            {title: '课程名称',data: 'course_name'},
+                            {title: '班级编码',data: 'grade_code'},
+                            {title: '班级名称',data: 'grade_name'},
+                            {title: '学生姓名',data: 'student_name'},
+                            {title: '任课老师',data: 'teacher_name'},
+                            {title: '学生学号',data: 'student_code'},
+                            {title: 'id',data: 'id'},
+                            {title: 'course_id',data: 'course_id'},
+                            {title: 'course_code',data: 'course_code'},
+                            {title: 'grade_id',data: 'grade_id'},
+                            {title: 'student_id',data: 'student_id'},
+                            {title: 'user_name',data: 'user_name'},
+                            {title: 'correct_state',data: 'correct_state'},
+                            {title: 'corrector',data: 'corrector'},
+                            {title: 'corrector_name',data: 'corrector_name'},
+                            {title: 'correct_time',data: 'correct_time'},
+                            {title: 'teacher_id',data: 'teacher_id'},
+                            {title: 'correct_comment',data: 'correct_comment'},
+                            {title: 'create_time',data: 'create_time'},
+                            {title: 'courses',data: 'courses'},
+                            {title: 'start_date',data: 'start_date'},
+                            {title: 'end_date',data: 'end_date'},
+                            {title: '操作'}
+                        ];
+                        columnsDefs = [
+                            {
+                                targets: columns.length-1,
+                                data: null,
+                                defaultContent: "<a href='javascript: void(0);' class='my-link'>批改</a>"
+                            },
+                            {
+                                visible: false, targets: [6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21]
+                            }
+                        ];
+                        renderTable(data,columns,columnsDefs);
+                    }
+                }
+            });
+        }
+        if(id === 'CorrectPaper'){
+            let data = {};
+            data.start_date = new Date();
+            data.end_date = new Date();
+            data.exam_state = new Date();
+            test = 'auth/get/teacher/correct/paper/list';
+            $.ajax({
+                url: url + test,
+                type: 'post',
+                success: function (result) {
+                    if(result.isSuccess){
+                        data = result.Data;
+                        columns = [
+                            {title: '开始时间',data: 'exam_begin'},
+                            {title: '试卷名称',data: 'exam_name'},
+                            {title: '姓名',data: 'student_name'},
+                            {title: '学号',data: 'student_code'},
+                            {title: '班级编码',data: 'grade_code'},
+                            {title: 'exam_id',data: 'exam_id'},
+                            {title: 'course_id',data: 'course_id'},
+                            {title: 'course_paper_id',data: 'course_paper_id'},
+                            {title: 'paper_id',data: 'paper_id'},
+                            {title: 'exam_time',data: 'exam_time'},
+                            {title: 'exam_date',data: 'exam_date'},
+                            {title: 'exam_end',data: 'exam_end'},
+                            {title: 'exam_subject',data: 'exam_subject'},
+                            {title: 'exam_typeone',data: 'exam_typeone'},
+                            {title: 'exam_typetwo',data: 'exam_typetwo'},
+                            {title: 'exam_achievement',data: 'exam_achievement'},
+                            {title: 'exam_teacher',data: 'exam_teacher'},
+                            {title: 'exam_estimate',data: 'exam_estimate'},
+                            {title: 'exam_type',data: 'exam_type'},
+                            {title: 'exam_score',data: 'exam_score'},
+                            {title: 'student_id',data: 'student_id'},
+                            {title: 'exam_state',data: 'exam_state'},
+                            {title: 'teacher_comment',data: 'teacher_comment'},
+                            {title: 'paper_score',data: 'paper_score'},
+                            {title: 'correct_user',data: 'correct_user'},
+                            {title: 'correct_name',data: 'correct_name'},
+                            {title: 'correct_date',data: 'correct_date'},
+                            {title: 'studentAnswerList',data: 'studentAnswerList'},
+                            {title: 'course_order',data: 'course_order'},
+                            {title: 'teacher_id',data: 'teacher_id'},
+                            {title: 'grade_id',data: 'grade_id'},
+                            {title: 'paper_type',data: 'paper_type'},
+                            {title: 'rank',data: 'rank'},
+                            {ttile: '操作'}
+
+                        ];
+                        columnsDefs = [
+                            {
+                                targets: columns.length-1,
+                                data: null,
+                                defaultContent: "<a href='javascript: void(0);' class='my-link'>批改</a>"
+                            },
+                            {
+                                visible: false, targets: [5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33]
+                            }
+                        ];
+                        renderTable(data,columns,columnsDefs);
+                    }
+                }
+            });
+        }
 
 
     }
     tabs.click(function () {
         getTableData($(this)[0].id);
     });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 })();

@@ -85,8 +85,17 @@ table{
 }
 
 
+.sticky-header .body-content{
+    padding: 0;
+}
+.body-content{
+    margin-left: 0;
+}
 
-
+.container{
+    padding: 0;
+    width: 100%;
+}
 
     /**
      * @auther xubowei

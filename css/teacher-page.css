@@ -2,18 +2,8 @@
     margin-top: 10px;
     margin-left: 15px;
 }
-.col-md-8 {
-    width: 76%;
-}
-.col-md-4 {
-    width: 23%;
-}
-.wrapper .me-nav .calendar{
-    background: #fff;
-    margin-left: 30px;
-    height: auto;
-    padding: 0;
-}
+
+
 /* *
  * @auther xubowei
  * 图表样式
@@ -26,18 +16,27 @@
  * @auther xubowei
  * 日历样式
  * */
+.wrapper .me-nav .cal{
+    background: #fff;
+    width: auto;
+    height: auto;
+    padding: 0;
+}
+.wrapper .me-nav .calendat{
+    margin-left: 30px;
+}
 .calendar-hd{
     height: auto;
 }
 .week{
     padding: 0;
 }
-.calendar-ct .week{
-    width: 321px !important;
-}
-.calendar-ct .date-items .days{
-    width: 321px !important;
-}
+/*.calendar-ct .week{*/
+    /*width: 321px !important;*/
+/*}*/
+/*.calendar-ct .date-items .days{*/
+    /*width: 321px !important;*/
+/*}*/
 
 /* *
  * @author xubowei

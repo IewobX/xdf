@@ -198,8 +198,7 @@
     let tab = $('.wrapper .panel .table-response ul > .active ');
     getTableData(tab[0].id);                                                                                            //初始化表格
     let tabs = $('.wrapper .panel .table-response ul > li ');
-    function renderTable(data,columns) {
-        $.fn.dataTable.tables( {visible: true, api: true} ).columns.adjust();
+    function renderTable(data,columns,columnsDefs) {
         table = $('#table').DataTable({
             data: data,
             destroy: true,
@@ -210,39 +209,7 @@
             scrollCollapse: true,
             paging: false,
             columns: columns,
-            columnDefs: [
-                {
-                    render: function ( data, type, row ) {
-                        let date = new Date(data);
-                        return date.getFullYear()+'/'+date.getMonth()+1+'/'+date.getDate();
-                    },
-                    targets: 8
-                },
-                {
-                    render: function ( data, type, row ) {
-                        let date = new Date(data);
-                        return date.getFullYear()+'/'+date.getMonth()+1+'/'+date.getDate();
-                    },
-                    targets: 9
-                },
-                {
-                    targets: 14,
-                    data: null,
-                    defaultContent: "<a class='my-link'>查看</a>"
-                }
-                // {
-                //     visible: false, targets: 0
-                // },
-                // {
-                //     visible: false, targets: 3
-                // },
-                // {
-                //     visible: false, targets: 7
-                // },
-                // {
-                //     visible: false, targets: 10
-                // }
-            ],
+            columnDefs: columnsDefs,
 
         });
 
@@ -254,6 +221,7 @@
     function getTableData(id){
         let data;
         let columns = [];
+        let columnsDefs = [];
         let test;
         if(id === 'StartReminding'){
             test = 'test3';
@@ -285,24 +253,52 @@
                 success: function (result) {
                     if(result.isSuccess){
                         data = result.Data;
-
                         columns = [
-                            // {title: '学生id',data: result.Data.student_id},
+                            {title: '学生id',data: result.Data.student_id},//
                             {title: '学生姓名',data: result.Data.student_name},
                             {title: '学号',data: result.Data.student_code},
-                            // {title: '班级id',data: result.Data.grade_id},
+                            {title: '班级id',data: result.Data.grade_id},//
                             {title: '班级编码',data: result.Data.grade_code},
                             {title: '班级名称',data: result.Data.grade_name},
                             {title: '校区',data: result.Data.school_name},
-                            // {title: '报名日期',data: result.Data.grade_report_date},
+                            {title: '报名日期',data: result.Data.grade_report_date},//
                             {title: '开课日期',data: result.Data.grade_begin_date},
                             {title: '结课日期',data: result.Data.grade_end_date},
-                            // {title: '班级order',data: result.Data.grade_order},
+                            {title: '班级order',data: result.Data.grade_order},//
                             {title: '总课时',data: result.Data.class_away},
                             {title: '剩余课时',data: result.Data.class_away_wait},
                             {title: '学管',data: result.Data.student_admin_name},
                         ];
-                        renderTable(data,columns);
+                        columnsDefs = [
+                            {
+                                render: function ( data, type, row ) {
+                                    let date = new Date(data);
+                                    return date.getFullYear()+'/'+date.getMonth()+1+'/'+date.getDate();
+                                },
+                                targets: 8
+                            },
+                            {
+                                render: function ( data, type, row ) {
+                                    let date = new Date(data);
+                                    return date.getFullYear()+'/'+date.getMonth()+1+'/'+date.getDate();
+                                },
+                                targets: 9
+                            },
+
+                            {
+                                visible: false, targets: 0
+                            },
+                            {
+                                visible: false, targets: 3
+                            },
+                            {
+                                visible: false, targets: 7
+                            },
+                            {
+                                visible: false, targets: 10
+                            }
+                        ];
+                        renderTable(data,columns,columnsDefs);
                     }
                 }
             })

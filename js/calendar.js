@@ -13,7 +13,7 @@
     var defaults = {
 
             // 宽度
-            width: 280,
+            width: 100,
             // 高度, 不包含头部，头部固定高度
             height: 280,
 
@@ -110,7 +110,7 @@
         MARK_DAY_HTML = '<i class="dot"></i>',
         DATE_DIS_TPL = '{year}/<span class="m">{month}</span>',
 
-        ITEM_STYLE = 'style="width:{w}px;height:{h}px;line-height:{h}px"',
+        ITEM_STYLE = 'style="width:{w}%;height:{h}px;line-height:{h}px"',
         WEEK_ITEM_TPL = '<li ' + ITEM_STYLE + '>{wk}</li>',
         DAY_ITEM_TPL = '<li ' + ITEM_STYLE + ' class="{class}" {action}>{value}</li>',
         MONTH_ITEM_TPL = '<li ' + ITEM_STYLE + ' ' + ITEM_MONTH + '>{m}月</li>',
@@ -118,7 +118,7 @@
         TEMPLATE = [
             '<div class="calendar-inner">',
             '<div class="calendar-views">',
-            '<div class="view view-date">',
+            '<div class="my-view view-date">',
             '<div class="calendar-hd">',
             '<a href="javascript:;" data-calendar-display-date class="calendar-display">',
             '{yyyy}/<span class="m">{mm}</span>',
@@ -133,7 +133,7 @@
             '<ul class="date-items"></ul>',
             '</div>',
             '</div>',
-            '<div class="view view-month">',
+            '<div class="my-view view-month">',
             '<div class="calendar-hd">',
             '<a href="javascript:;" data-calendar-display-month class="calendar-display">{yyyy}</a>',
             '<div class="calendar-arrow">',
@@ -384,7 +384,9 @@
                 $days.append(this.getDayItem(nextM.y, nextM.m, n, NEXT_FLAG));
             }
 
-            return $('<li></li>').width(this.options.width).append($days);
+            // return $('<li class="my-li"></li>').width(this.options.width).append($days);
+            return $('<li class="my-li"></li>').append($days);
+            // return $('<li></li>').width(this.options.width).append($days);
         },
         getWeekHtml: function() {
             var week = [],
@@ -436,7 +438,7 @@
                 this.$monthItems.children().eq(m - 1).addClass(TODAY_CLASS);
             }
         },
-        fillStatic: function() {
+            fillStatic: function() {
             var staticData = {
                 prev: this.options.prev,
                 next: this.options.next,
@@ -726,12 +728,15 @@
             var w = this.width,
                 h = this.height,
                 hdH = this.$element.find('.calendar-hd').outerHeight();
-
-            this.$element.width(w).height(h + hdH)
+            this.$element.height(h + hdH)
                 .find('.calendar-inner, .view')
-                .css('width', w + 'px');
-
-            this.$element.find('.calendar-ct').width(w).height(h);
+            //
+            // this.$element.find('.calendar-ct').height(h).css('width',w+'%');
+            // this.$element.css('width',w).height(h + hdH)
+            //     .find('.calendar-inner, .view')
+            //     .css('width', w + '%');
+            //
+            // this.$element.find('.calendar-ct').height(h).css('width',w+'%');
 
         },
         init: function() {
@@ -777,7 +782,7 @@
         }
 
         return this;
-    }
+    };
 
     $.fn.calendar.defaults = defaults;
 
