@@ -20,11 +20,9 @@
     background: #fff;
     width: auto;
     height: auto;
-    padding: 0;
+    padding: 0 10px 15px;
 }
-.wrapper .me-nav .calendat{
-    margin-left: 30px;
-}
+
 .calendar-hd{
     height: auto;
 }
