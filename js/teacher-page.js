@@ -12,12 +12,29 @@
      *
      * */
 
-    $("#class_code").spinnerBox({url: "/sms/spinner/grade", placeholderText: "班级编码", defaultValue: 1});
-    $("#score_type").spinnerBox({placeholderText: "成绩类型", defaultValue: 1});
+    $("#class_code").spinnerBox({
+        url: "/sms/spinner/grade", placeholderText: "班级编码", defaultValue: 1, onChange: function (code) {
+            let type = $("#score_type").spinnerBox("getValue");
+            if (type && code) {
+                getChartsData(code, type)
+            }
+
+        }
+    });
+    $("#score_type").spinnerBox({
+        placeholderText: "成绩类型", onChange: function (code) {
+            let code_ = $("#class_code").spinnerBox("getValue");
+            if (code_ && code) {
+                getChartsData(code_, code)
+            }
+        }
+    });
     $("#score_type").spinnerBox("loadData", [{dic_code: 0, dic_value: "平均成绩"}, {
         dic_code: 1,
         dic_value: "入门测"
     }, {dic_code: 2, dic_value: "出门测"}]);
+
+    $("#score_type").spinnerBox("setValue", "0");
 
     /**
      * @auther xubowei
@@ -105,6 +122,7 @@
     }
 
     function getChartsData(grade_id, type) {
+        console.log(grade_id, type);
         $.ajax({
             url: '/sms/get/line/graph/student/score',
             type: "post",
@@ -112,6 +130,7 @@
             data: {"grade_id": grade_id, "type": type},
             success: function (result) {
                 if (result.isSuccess) {
+                    console.log(result.Data);
                     for (let i = 0; i < result.Data.data.length; i++) {
                         result.Data.data[i].data = transform(result.Data.data[i].score);
                         delete result.Data.data[i].score;
@@ -122,22 +141,22 @@
         });
     }
 
-    // getChartsData(96,0);
-    setTimeout(function () {
-        let classCode = $("#class_code").spinnerBox('getValue');
-        let scoreType = $("#score_type").spinnerBox('getValue');
-        getChartsData(96, 0);
-
-        $('#class_code .dropdown-menu li').click(function () {
-            classCode = $("#class_code").spinnerBox('getValue');
-            getChartsData(96, 0);
-        });
-
-        $('#score_type .dropdown-menu li').click(function () {
-            scoreType = $("#score_type").spinnerBox('getValue');
-            getChartsData(96, 0);
-        });
-    }, 50);
+    // // getChartsData(96,0);
+    // setTimeout(function () {
+    //     let classCode = $("#class_code").spinnerBox('getValue');
+    //     let scoreType = $("#score_type").spinnerBox('getValue');
+    //     getChartsData(classCode, scoreType);
+    //
+    //     $('#class_code .dropdown-menu li').click(function () {
+    //         classCode = $("#class_code").spinnerBox('getValue');
+    //         getChartsData(classCode, scoreType);
+    //     });
+    //
+    //     $('#score_type .dropdown-menu li').click(function () {
+    //         scoreType = $("#score_type").spinnerBox('getValue');
+    //         getChartsData(classCode, scoreType);
+    //     });
+    // }, 200);
 
 
     /**
@@ -287,11 +306,9 @@
         let data;
         let columns = [];
         let columnsDefs;
-        let test;
         if (id === 'LearningFeedback') {
-            test = 'test8';
             $.ajax({
-                url: url + test,
+                url: '/sms/get/teacher/class/condition/list',
                 type: 'get',
                 success: function (result) {
                     if (result.isSuccess) {
@@ -354,7 +371,7 @@
                             // },
                             {
                                 visible: false,
-                                targets: [10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30,31,32]
+                                targets: [10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32]
                             }
                         ];
                         renderTable(data, columns, columnsDefs);
@@ -366,7 +383,7 @@
             let data = {};
             let date = new Date();
             let year = date.getFullYear();
-            let month = date.getMonth()+1;
+            let month = date.getMonth() + 1;
             let day = date.getDate();
             data.correct_state = 1;
             data.start_date = year + "-" + month + "-" + day;
@@ -425,7 +442,7 @@
                             // },
                             {
                                 visible: false,
-                                targets: [6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30,31,32]
+                                targets: [6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32]
                             }
                         ];
                         renderTable(data, columns, columnsDefs);
@@ -441,7 +458,7 @@
             let day = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
             data.start_date = year + '-' + month + '-' + day;
             data.end_date = year + '-' + month + '-' + day;
-            data.exam_state =1;
+            data.exam_state = 1;
             data.student_code = null;
             data.student_name = null;
             data.grade_id = null;
@@ -495,7 +512,7 @@
                             // },
                             {
                                 visible: false,
-                                targets: [5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30,31,32]
+                                targets: [5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32]
                             }
                         ];
                         renderTable(data, columns, columnsDefs);

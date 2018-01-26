@@ -13,7 +13,7 @@
             onChange: null,
             url: null
         };
-        if (typeof options == 'string') {
+        if (typeof options === 'string') {
             var method = $.fn.spinnerBox.methods[options];
             if (method) {
                 return method(this, param);
@@ -38,8 +38,8 @@
                             if (req.isSuccess) {
                                 loadSpinnerBoxData($this, req.Data);
                                 // $this.dropdown();
-                                if (options.defaultValue != null) {
-                                    $this.spinnerBox("setValue", options.defaultValue)
+                                if (options.defaultValue != null && req.Data.length > 0) {
+                                    $this.spinnerBox("setValue", req.Data[0].dic_code)
                                 }
                             }
                         }
@@ -67,7 +67,7 @@
     $.fn.spinnerBox.methods = {
         setValue: function (jq, value) {
             var options = jq.data("options");
-            if (value == null || value == '') {
+            if (value === null || value === '') {
                 jq.data("fileValue", "");
                 jq.data("fileText", "");
                 jq.find("button").html(options.placeholderText + '<span class="caret"></span>');
@@ -77,7 +77,7 @@
                 return
             }
             jq.find("li").each(function () {
-                if ($(this).attr("fileValue") == value) {
+                if ($(this).attr("fileValue") === value) {
                     jq.data("fileValue", value);
                     jq.data("fileText", $(this).attr("fileText"));
                     jq.find("button").html($(this).attr("fileText") + '<span class="caret"></span>');
@@ -102,7 +102,7 @@
             loadSpinnerBoxData(jq, data)
         },
         setReadOnly: function (jq, value) {
-            if (value == true) {
+            if (value === true) {
                 if (!jq.hasClass("readonly_select")) {
                     jq.addClass("readonly_select")
                 }
@@ -125,10 +125,10 @@
             var _data = data[i];
             var _text, _value;
             for (var key in _data) {
-                if (key == options.valueField) {
+                if (key === options.valueField) {
                     _value = _data[key];
                 }
-                if (key == options.textField) {
+                if (key === options.textField) {
                     _text = _data[key];
                 }
             }
