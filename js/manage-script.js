@@ -166,12 +166,12 @@
 
 
     $('.wrapper .me-nav .choose-date .prev').click(function () {
-        let $this = $(this);
+        var $this = $(this);
         Dramatize($('#school').spinnerBox('getValue'),$this);
 
     });
     $('.wrapper .me-nav .choose-date .next').click(function () {
-        let $this = $(this);
+        var $this = $(this);
         Dramatize($('#school').spinnerBox('getValue'),$this);
     });
     /**
@@ -241,11 +241,9 @@
         let data;
         let columns = [];
         let columnsDefs = [];
-        let test;
         if (id === 'StartReminding') {
-            test = '/sms/get/class/start/remind';
             $.ajax({
-                url: test,
+                url: '/sms/get/class/start/remind',
                 type: 'get',
                 success: function (result) {
                     if (result.isSuccess) {
@@ -302,9 +300,8 @@
 
         }
         if (id === 'EndReminding') {
-            test = '/sms/get/class/end/remind';
             $.ajax({
-                url: test,
+                url: '/sms/get/class/end/remind',
                 type: 'get',
                 success: function (result) {
                     if (result.isSuccess) {

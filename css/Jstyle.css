@@ -246,13 +246,13 @@ table{
 .wrapper .panel .table-response .tabs > li{
     display: inline-block;
     text-align: center;
-    width: 89px;
+    width: 10%;
     line-height: 44px;
     margin-bottom: -1px;
 
 }
 .wrapper .panel .table-response .tabs > li > span{
-    margin-left: 3px;
+    margin-left: 5%;
 }
 
 .active{

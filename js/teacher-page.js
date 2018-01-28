@@ -1,3 +1,8 @@
+let calendar_;
+let date = new Date();
+let year = date.getFullYear();
+let month = date.getMonth() + 1;
+let day = date.getDate();
 (function () {
     /**
      * @author xubowei
@@ -47,7 +52,7 @@
         let studying;
         let taughtTime;
         $.ajax({
-            url: url + 'test5',
+            url: '/sms/get/teacher/head/info',
             type: 'get',
             // data: {user: 'user'},
             success: function (result) {
@@ -122,7 +127,6 @@
     }
 
     function getChartsData(grade_id, type) {
-        console.log(grade_id, type);
         $.ajax({
             url: '/sms/get/line/graph/student/score',
             type: "post",
@@ -130,7 +134,10 @@
             data: {"grade_id": grade_id, "type": type},
             success: function (result) {
                 if (result.isSuccess) {
-                    console.log(result.Data);
+                    if(JSON.stringify(result.Data)==='{}'){
+                        setCharts(null,null);
+                        return;
+                    }
                     for (let i = 0; i < result.Data.data.length; i++) {
                         result.Data.data[i].data = transform(result.Data.data[i].score);
                         delete result.Data.data[i].score;
@@ -141,49 +148,38 @@
         });
     }
 
-    // // getChartsData(96,0);
-    // setTimeout(function () {
-    //     let classCode = $("#class_code").spinnerBox('getValue');
-    //     let scoreType = $("#score_type").spinnerBox('getValue');
-    //     getChartsData(classCode, scoreType);
-    //
-    //     $('#class_code .dropdown-menu li').click(function () {
-    //         classCode = $("#class_code").spinnerBox('getValue');
-    //         getChartsData(classCode, scoreType);
-    //     });
-    //
-    //     $('#score_type .dropdown-menu li').click(function () {
-    //         scoreType = $("#score_type").spinnerBox('getValue');
-    //         getChartsData(classCode, scoreType);
-    //     });
-    // }, 200);
-
-
     /**
      * @auther xubowei
      * 日历
      * */
     function renderCalendar(data) {
-        $('#calendar').calendar({});
+        calendar_= $('#calendar').calendar({
+            data: data
+        });
 
     }
 
     function getCalendarData(year, month) {
-
         $.ajax({
             url: "/sms/get/class/schedule",
             type: 'get',
             data: {year: year, month: month},
             success: function (result) {
                 if (result.isSuccess) {
+                    if(calendar_){
+                        setTimeout(function () {
+                            $('#calendar').calendar("setData", result.Data);
+                        },500);
+                        return;
+                    }
                     renderCalendar(result.Data);
-                    $('#calendar').calendar("setData", result.Data);
+
                 }
             }
         })
     }
 
-    getCalendarData(new Date().getFullYear(), new Date().getMonth() + 1);
+    getCalendarData(year, month);
     setTimeout(function () {
         // console.log($('#calendar').children('.calendar-inner'));
         $('#calendar .calendar-inner .calendar-views .view-date .calendar-hd .calendar-arrow .prev').click(function () {
@@ -196,6 +192,7 @@
                 month = '12';
                 year -= 1;
             }
+            console.log(year,month);
             getCalendarData(year, month);
         });
         $('#calendar .calendar-inner .calendar-views .view-date .calendar-hd .calendar-arrow .next').click(function () {
@@ -208,28 +205,57 @@
                 month = '1';
                 year = parseInt(year) + 1;
             }
+            console.log(year,month);
             getCalendarData(year, month);
         });
-    }, 100);
+    }, 500);
 
     /**
      * @author xubowei
      * 标签页的徽章
      * */
-    $.ajax({
-        url: url + 'test8',
-        type: 'get',
-        success: function (result) {
-            if (result.isSuccess) {
-                let data = result.Data.length;
-                if (data) {
-                    // console.log(data);
-                    $('#LearningFeedback span')[0].className = 'badge bg-primary';
-                    $('#LearningFeedback span')[0].innerHTML = data;
-                }
-            }
-        }
-    });
+    // $.ajax({
+    //     url: '/sms/get/teacher/class/condition/list',
+    //     type: 'get',
+    //     success: function (result) {
+    //         if (result.isSuccess) {
+    //             let data = result.Data.length;
+    //             if (data) {
+    //                 // console.log(data);
+    //                 $('#LearningFeedback span')[0].className = 'badge bg-primary';
+    //                 $('#LearningFeedback span')[0].innerHTML = data;
+    //             }
+    //         }
+    //     }
+    // });
+    // $.ajax({
+    //     url: '/sms/course/get/homeWork/list',
+    //     type: 'get',
+    //     success: function (result) {
+    //         if (result.isSuccess) {
+    //             let data = result.Data.length;
+    //             if (data) {
+    //                 console.log(data);
+    //                 $('#CorrectHomework span')[0].className = 'badge bg-primary';
+    //                 $('#CorrectHomework span')[0].innerHTML = data;
+    //             }
+    //         }
+    //     }
+    // });
+    // $.ajax({
+    //     url: '/sms/auth/get/teacher/correct/paper/list',
+    //     type: 'get',
+    //     success: function (result) {
+    //         if (result.isSuccess) {
+    //             let data = result.Data.length;
+    //             if (data) {
+    //                 // console.log(data);
+    //                 $('#CorrectPaper span')[0].className = 'badge bg-primary';
+    //                 $('#CorrectPaper span')[0].innerHTML = data;
+    //             }
+    //         }
+    //     }
+    // });
 
 
     /**
@@ -239,6 +265,8 @@
     let table;
     let tab = $('.wrapper .panel .table-response ul > .active ');
     getTableData(tab[0].id);
+
+
 
     let tabs = $('.wrapper .panel .table-response ul > li ');
 
@@ -258,6 +286,7 @@
         table.on("click", 'tr td:last-child', function () {
             let data = table.row(this).data();
             let id = $('.active')[0].id;
+            console.log(data.course_id);
             if (id === 'LearningFeedback') {
                 let date = new Date(data.course_date);
                 $('.modal-title').html("学情反馈");
@@ -267,16 +296,82 @@
                 $('#myModal').data('student_id', data.student_id);
                 $('#class-time').html(date.getFullYear() + '-' + (date.getMonth() + 1) + "-" + date.getDate() + '&nbsp;' + data.course_begin_time + '-' + data.course_end_time);
             }
-            // if (id === 'CorrectHomeword') {
-            //     window.location.href = "course/get/homeWork/page/" + row.id + '/' + row.course_id + "/" + row.student_id + "/" + 1;
-            // }
-            // if (id === 'CorrectPaper') {
-            //     window.open("auth/get/teacher/read/paper/" + row.student_id + "," + row.course_paper_id + "," + row.student_name + "," + 1);
-            // }
+            if (id === 'CorrectHomework') {
+                window.location.href = "course/get/homeWork/page/" + table.row('id') + '/' + table.row('course_id') + "/" + table.row('student_id') + "/" + 1;
+            }
+            if (id === 'CorrectPaper') {
+                window.open("auth/get/teacher/read/paper/" + table.row('student_id') + "," + table.row('course_paper_id') + "," + table.row('student_name') + "," + 1);
+            }
 
         });
     }
-
+/**
+ * @author xubowei
+ * 标签页的徽章
+ * */
+    (function () {
+        $.ajax({
+            url: '/sms/get/teacher/class/condition/list',
+            type: 'get',
+            success: function (result) {
+                let data = result.Data;
+                if (result.isSuccess) {
+                    let datalength = result.Data.length;
+                    if (data) {
+                        $('#LearningFeedback span')[0].className = 'badge bg-primary';
+                        $('#LearningFeedback span')[0].innerHTML = datalength;
+                    }
+                }
+            }
+        });
+    })();
+    (function () {
+        let data = {};
+        data.correct_state = 1;
+        data.start_date = year + "-" + month + "-" + day;
+        data.end_date = year + "-" + month + "-" + day;
+        $.ajax({
+            url: '/sms/course/get/homeWork/list',
+            type: 'post',
+            data: JSON.stringify(data),
+            contentType: "application/json",
+            success: function (result) {
+                let data = result.Data;
+                if (result.isSuccess) {
+                    let datalength = result.Data.length;
+                    if (data) {
+                        $('#CorrectHomework span')[0].className = 'badge bg-primary';
+                        $('#CorrectHomework span')[0].innerHTML = datalength;
+                    }
+                }
+            }
+        });
+    })();
+    (function () {
+        let data = {};
+        // let date = new Date();
+        // let year = date.getFullYear();
+        let m_month = month < 10 ? "0" + month : month;
+        let m_day = day < 10 ? "0" + day : day;
+        data.start_date = year + '-' + m_month + '-' + m_day;
+        data.end_date = year + '-' + m_month + '-' + m_day;
+        data.exam_state = 1;
+        data.student_code = null;
+        data.student_name = null;
+        data.grade_id = null;
+        data.paper_type = null;
+        $.post('/sms/auth/get/teacher/correct/paper/list', data,
+            function (result) {
+                if (result.isSuccess) {
+                    let data = result.Data;
+                    let datalength = result.Data.length;
+                    if (data) {
+                        $('#CorrectPaper span')[0].className = 'badge bg-primary';
+                        $('#CorrectPaper span')[0].innerHTML = datalength;
+                    }
+                }
+            })
+    })();
     /**
      * @author xubowei
      * 学情反馈点击批改后的列表提交
@@ -300,8 +395,6 @@
             }
         })
     });
-
-
     function getTableData(id) {
         let data;
         let columns = [];
@@ -313,6 +406,12 @@
                 success: function (result) {
                     if (result.isSuccess) {
                         data = result.Data;
+                        let datalength = result.Data.length;
+                        if (data) {
+                            // console.log(data);
+                            $('#LearningFeedback span')[0].className = 'badge bg-primary';
+                            $('#LearningFeedback span')[0].innerHTML = datalength;
+                        }
                         columns = [
                             {title: '学生姓名', data: 'student_name'},
                             {title: '学号', data: 'student_code'},
@@ -328,26 +427,25 @@
                             {title: 'student_id', data: 'student_id'},
                             {title: 'condition_check', data: 'condition_check'},
                             {title: 'condition_comment', data: 'condition_comment'},
-                            {title: ''},
-                            {title: ''},
-                            {title: ''},
-                            {title: ''},
-                            {title: ''},
-                            {title: ''},
-                            {title: ''},
-                            {title: ''},
-                            {title: ''},
-                            {title: ''},
-                            {title: ''},
-                            {title: ''},
-                            {title: ''},
-                            {title: ''},
-                            {title: ''},
-                            {title: ''},
-                            {title: ''},
-                            {title: ''},
-                            {title: ''},
-
+                            {title: 'course_id',data: 'course_id'},
+                            {title: '',data: null},
+                            {title: '',data: null},
+                            {title: '',data: null},
+                            {title: '',data: null},
+                            {title: '',data: null},
+                            {title: '',data: null},
+                            {title: '',data: null},
+                            {title: '',data: null},
+                            {title: '',data: null},
+                            {title: '',data: null},
+                            {title: '',data: null},
+                            {title: '',data: null},
+                            {title: '',data: null},
+                            {title: '',data: null},
+                            {title: '',data: null},
+                            {title: '',data: null},
+                            {title: '',data: null},
+                            {title: '',data: null},
                             {title: '操作'},
                         ];
                         columnsDefs = [
@@ -364,11 +462,11 @@
                                 },
                                 targets: 10
                             },
-                            // {
-                            //     targets: columns.length - 1,
-                            //     data: null,
-                            //     defaultContent: "<button class='my-button' data-toggle='modal' data-target='#myModal'>批改</button>"
-                            // },
+                            {
+                                targets: columns.length - 1,
+                                data: null,
+                                defaultContent: "<button class='my-button' data-toggle='modal' data-target='#myModal'>批改</button>"
+                            },
                             {
                                 visible: false,
                                 targets: [10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32]
@@ -379,12 +477,12 @@
                 }
             });
         }
-        if (id === 'CorrectHomeword') {
+        if (id === 'CorrectHomework') {
             let data = {};
-            let date = new Date();
-            let year = date.getFullYear();
-            let month = date.getMonth() + 1;
-            let day = date.getDate();
+            // let date = new Date();
+            // let year = date.getFullYear();
+            // let month = date.getMonth() + 1;
+            // let day = date.getDate();
             data.correct_state = 1;
             data.start_date = year + "-" + month + "-" + day;
             data.end_date = year + "-" + month + "-" + day;
@@ -397,6 +495,12 @@
                 success: function (result) {
                     if (result.isSuccess) {
                         data = result.Data;
+                        let datalength = result.Data.length;
+                        if (data) {
+                            // console.log(data);
+                            $('#CorrectHomework span')[0].className = 'badge bg-primary';
+                            $('#CorrectHomework span')[0].innerHTML = datalength;
+                        }
                         columns = [
                             {title: '课程名称', data: 'course_name'},
                             {title: '班级编码', data: 'grade_code'},
@@ -420,26 +524,25 @@
                             {title: 'courses', data: 'courses'},
                             {title: 'start_date', data: 'start_date'},
                             {title: 'end_date', data: 'end_date'},
-                            {title: ''},
-                            {title: ''},
-                            {title: ''},
-                            {title: ''},
-                            {title: ''},
-                            {title: ''},
-                            {title: ''},
-                            {title: ''},
-                            {title: ''},
-                            {title: ''},
-                            {title: ''},
-
+                            {title: '',data: null},
+                            {title: '',data: null},
+                            {title: '',data: null},
+                            {title: '',data: null},
+                            {title: '',data: null},
+                            {title: '',data: null},
+                            {title: '',data: null},
+                            {title: '',data: null},
+                            {title: '',data: null},
+                            {title: '',data: null},
+                            {title: '',data: null},
                             {title: '操作'}
                         ];
                         columnsDefs = [
-                            // {
-                            //     targets: columns.length - 1,
-                            //     data: null,
-                            //     defaultContent: "<a href='javascript: void(0);' class='my-link'>批改</a>"
-                            // },
+                            {
+                                targets: columns.length - 1,
+                                data: null,
+                                defaultContent: "<a href='javascript: void(0);' class='my-link'>批改</a>"
+                            },
                             {
                                 visible: false,
                                 targets: [6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32]
@@ -452,12 +555,12 @@
         }
         if (id === 'CorrectPaper') {
             let data = {};
-            let date = new Date();
-            let year = date.getFullYear();
-            let month = date.getMonth() + 1 < 10 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1;
-            let day = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
-            data.start_date = year + '-' + month + '-' + day;
-            data.end_date = year + '-' + month + '-' + day;
+            // let date = new Date();
+            // let year = date.getFullYear();
+            let m_month = month < 10 ? "0" + month : month;
+            let m_day = day < 10 ? "0" + day : day;
+            data.start_date = year + '-' + m_month + '-' + m_day;
+            data.end_date = year + '-' + m_month + '-' + m_day;
             data.exam_state = 1;
             data.student_code = null;
             data.student_name = null;
@@ -467,6 +570,11 @@
                 function (result) {
                     if (result.isSuccess) {
                         data = result.Data;
+                        let datalength = result.Data.length;
+                        if (data) {
+                            $('#CorrectPaper span')[0].className = 'badge bg-primary';
+                            $('#CorrectPaper span')[0].innerHTML = datalength;
+                        }
                         columns = [
                             {title: '开始时间', data: 'exam_begin'},
                             {title: '试卷名称', data: 'exam_name'},
@@ -505,11 +613,11 @@
 
                         ];
                         columnsDefs = [
-                            // {
-                            //     targets: columns.length - 1,
-                            //     data: null,
-                            //     defaultContent: "<a href='javascript: void(0);' class='my-link'>批改</a>"
-                            // },
+                            {
+                                targets: columns.length - 1,
+                                data: null,
+                                defaultContent: "<a href='javascript: void(0);' class='my-link'>批改</a>"
+                            },
                             {
                                 visible: false,
                                 targets: [5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32]
