@@ -53,3 +53,70 @@
     margin-right: 20px;
 
 }
+
+@media (min-width: 992px){
+    .col-md-3 {
+        width: 25%;
+    }
+}
+@media (max-width: 992px){
+    .col-md-3 {
+        width: 40%;
+    }
+}
+@media (max-width: 800px){
+    .col-md-3{
+        width: 50%;
+    }
+}
+@media (max-width: 640px){
+    .col-md-3{
+        width: 60%
+    }
+}
+@media (max-width: 533px){
+    .col-md-3{
+        width: 70%
+    }
+}
+@media (max-width: 457px){
+    .col-md-3{
+        width: 80%
+    }
+}
+@media (max-width: 400px){
+    .col-md-3{
+        width: 90%
+    }
+}
+@media (max-width: 356px){
+    .col-md-3{
+        width: 100%
+    }
+}
+/**
+ * @author
+ * 弹窗样式
+ */
+.modal-body .classSituation{
+    margin: 20px 0 20px 20px;
+}
+.modal-body .classSituation .btn-group > label{
+    background-color: #41CBAA;
+    height: 30px;
+    line-height: 30px;
+    margin-left: 10px;
+    padding: 0 10px;
+    border: none;
+}
+
+.modal-body .classSituation .btn-group .active{
+    color: #000;
+}
+.modal-body .classSummary{
+    margin: 20px 0 20px 20px;
+}
+.modal-body .classSummary textarea{
+    width: 50%;
+    height: 100px;
+}

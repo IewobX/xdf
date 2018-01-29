@@ -183,12 +183,13 @@
         type: 'get',
         success: function (result) {
             if (result.isSuccess) {
-                let data = result.Data.length;
-
-                if (data) {
-                    console.log(data);
-                    $('#StartReminding span')[0].className = 'badge bg-primary';
-                    $('#StartReminding span')[0].innerHTML = data;
+                let data = result.Data;
+                if (result.isSuccess) {
+                    let datalength = result.Data.length;
+                    if (data) {
+                        $('#StartReminding span')[0].className = 'badge bg-primary';
+                        $('#StartReminding span')[0].innerHTML = datalength;
+                    }
                 }
             }
         }
@@ -198,12 +199,13 @@
         type: 'get',
         success: function (result) {
             if (result.isSuccess) {
-                let data = result.Data.length;
-
-                if (data) {
-                    console.log(data);
-                    $('#EndReminding span')[0].className = 'badge bg-primary';
-                    $('#EndReminding span')[0].innerHTML = data;
+                let data = result.Data;
+                if (result.isSuccess) {
+                    let datalength = result.Data.length;
+                    if (data) {
+                        $('#EndReminding span')[0].className = 'badge bg-primary';
+                        $('#EndReminding span')[0].innerHTML = datalength;
+                    }
                 }
             }
         }
@@ -232,9 +234,9 @@
 
         });
 
-        table.on("click", 'tr td:last-child', function () {
-            console.log(table.row(this).data());
-        })
+        // table.on("click", 'tr td:last-child', function () {
+        //     console.log(table.row(this).data());
+        // })
     }
 
     function getTableData(id) {
@@ -248,18 +250,23 @@
                 success: function (result) {
                     if (result.isSuccess) {
                         data = result.Data;
+                        let datalength = result.Data.length;
+                        if (data) {
+                            $('#StartReminding span')[0].className = 'badge bg-primary';
+                            $('#StartReminding span')[0].innerHTML = datalength;
+                        }
                         columns = [
-                            {title: '学生id', data: result.Data.student_id},//
+                            {title: '学生id', data: result.Data.student_id},
                             {title: '学生姓名', data: result.Data.student_name},
                             {title: '学号', data: result.Data.student_code},
-                            {title: '班级id', data: result.Data.grade_id},//
+                            {title: '班级id', data: result.Data.grade_id},
                             {title: '班级编码', data: result.Data.grade_code},
                             {title: '班级名称', data: result.Data.grade_name},
                             {title: '校区', data: result.Data.school_name},
-                            {title: '报名日期', data: result.Data.grade_report_date},//
+                            {title: '报名日期', data: result.Data.grade_report_date},
                             {title: '开课日期', data: result.Data.grade_begin_date},
                             {title: '结课日期', data: result.Data.grade_end_date},
-                            {title: '班级order', data: result.Data.grade_order},//
+                            {title: '班级order', data: result.Data.grade_order},
                             {title: '总课时', data: result.Data.class_away},
                             {title: '剩余课时', data: result.Data.class_away_wait},
                             {title: '学管', data: result.Data.student_admin_name},
@@ -306,6 +313,11 @@
                 success: function (result) {
                     if (result.isSuccess) {
                         data = result.Data;
+                        let datalength = result.Data.length;
+                        if (data) {
+                            $('#EndReminding span')[0].className = 'badge bg-primary';
+                            $('#EndReminding span')[0].innerHTML = datalength;
+                        }
                         columns = [
                             {title: '学生id', data: result.Data.student_id},//
                             {title: '学生姓名', data: result.Data.student_name},

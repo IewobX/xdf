@@ -255,7 +255,7 @@ table{
     margin-left: 5%;
 }
 
-.active{
+.table-response .tabs .active{
     background: #fff;
     border-right: 1px solid #43d396;
     border-left: 1px solid #43d396;

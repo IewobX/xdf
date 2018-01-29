@@ -21,17 +21,17 @@
               <caret line="162" column="26" lean-forward="false" selection-start-line="162" selection-start-column="26" selection-end-line="162" selection-end-column="26" />
               <folding>
                 <element signature="n#div#0;n#div#0;n#div#0;n#section#0;n#body#0;n#html#0;n#!!top" expanded="false" />
-                <marker date="1516868668473" expanded="true" signature="7431:7536" ph="..." />
+                <marker date="1516948257658" expanded="true" signature="7431:7536" ph="..." />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="teacher-page.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="teacher-page.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/js/teacher-page.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="7545">
-              <caret line="503" column="41" lean-forward="false" selection-start-line="503" selection-start-column="41" selection-end-line="503" selection-end-column="41" />
+            <state relative-caret-position="6103">
+              <caret line="613" column="26" lean-forward="true" selection-start-line="613" selection-start-column="26" selection-end-line="613" selection-end-column="26" />
               <folding />
             </state>
           </provider>
@@ -71,7 +71,7 @@
         <entry file="file://$PROJECT_DIR$/manage_page.html">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="1155">
-              <caret line="77" column="59" lean-forward="true" selection-start-line="77" selection-start-column="59" selection-end-line="77" selection-end-column="59" />
+              <caret line="77" column="59" lean-forward="false" selection-start-line="77" selection-start-column="59" selection-end-line="77" selection-end-column="59" />
               <folding>
                 <element signature="n#style#0;n#div#0;n#section#0;n#div#2;n#div#0;n#div#0;n#section#0;n#body#0;n#html#0;n#!!top" expanded="true" />
               </folding>
@@ -79,11 +79,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="manage-script.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="manage-script.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/js/manage-script.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="405">
-              <caret line="27" column="85" lean-forward="true" selection-start-line="27" selection-start-column="85" selection-end-line="27" selection-end-column="85" />
+              <caret line="27" column="85" lean-forward="false" selection-start-line="27" selection-start-column="85" selection-end-line="27" selection-end-column="85" />
               <folding />
             </state>
           </provider>
@@ -233,6 +233,18 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope">
+        <subPane subId="Project Files">
+          <expand>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="work" type="cbb8eebc:String" user="work" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -249,18 +261,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope">
-        <subPane subId="Project Files">
-          <expand>
-            <path>
-              <item name="Root" type="cbb8eebc:String" user="Root" />
-              <item name="work" type="cbb8eebc:String" user="work" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
-      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -340,11 +340,12 @@
       <workItem from="1516930480447" duration="2087000" />
       <workItem from="1516935308540" duration="745000" />
       <workItem from="1516938272370" duration="694000" />
+      <workItem from="1517190088190" duration="19000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="339176000" />
+    <option name="totallyTimeSpent" value="339195000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -697,7 +698,7 @@
     <entry file="file://$PROJECT_DIR$/manage_page.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1155">
-          <caret line="77" column="59" lean-forward="true" selection-start-line="77" selection-start-column="59" selection-end-line="77" selection-end-column="59" />
+          <caret line="77" column="59" lean-forward="false" selection-start-line="77" selection-start-column="59" selection-end-line="77" selection-end-column="59" />
           <folding>
             <element signature="n#style#0;n#div#0;n#section#0;n#div#2;n#div#0;n#div#0;n#section#0;n#body#0;n#html#0;n#!!top" expanded="true" />
           </folding>
@@ -710,7 +711,7 @@
           <caret line="162" column="26" lean-forward="false" selection-start-line="162" selection-start-column="26" selection-end-line="162" selection-end-column="26" />
           <folding>
             <element signature="n#div#0;n#div#0;n#div#0;n#section#0;n#body#0;n#html#0;n#!!top" expanded="false" />
-            <marker date="1516868668473" expanded="true" signature="7431:7536" ph="..." />
+            <marker date="1516948257658" expanded="true" signature="7431:7536" ph="..." />
           </folding>
         </state>
       </provider>
@@ -723,18 +724,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/js/teacher-page.js">
+    <entry file="file://$PROJECT_DIR$/js/manage-script.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="7545">
-          <caret line="503" column="41" lean-forward="false" selection-start-line="503" selection-start-column="41" selection-end-line="503" selection-end-column="41" />
+        <state relative-caret-position="405">
+          <caret line="27" column="85" lean-forward="false" selection-start-line="27" selection-start-column="85" selection-end-line="27" selection-end-column="85" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/js/manage-script.js">
+    <entry file="file://$PROJECT_DIR$/js/teacher-page.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="405">
-          <caret line="27" column="85" lean-forward="true" selection-start-line="27" selection-start-column="85" selection-end-line="27" selection-end-column="85" />
+        <state relative-caret-position="6103">
+          <caret line="613" column="26" lean-forward="true" selection-start-line="613" selection-start-column="26" selection-end-line="613" selection-end-column="26" />
           <folding />
         </state>
       </provider>

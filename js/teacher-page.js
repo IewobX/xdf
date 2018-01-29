@@ -214,101 +214,6 @@ let day = date.getDate();
      * @author xubowei
      * 标签页的徽章
      * */
-    // $.ajax({
-    //     url: '/sms/get/teacher/class/condition/list',
-    //     type: 'get',
-    //     success: function (result) {
-    //         if (result.isSuccess) {
-    //             let data = result.Data.length;
-    //             if (data) {
-    //                 // console.log(data);
-    //                 $('#LearningFeedback span')[0].className = 'badge bg-primary';
-    //                 $('#LearningFeedback span')[0].innerHTML = data;
-    //             }
-    //         }
-    //     }
-    // });
-    // $.ajax({
-    //     url: '/sms/course/get/homeWork/list',
-    //     type: 'get',
-    //     success: function (result) {
-    //         if (result.isSuccess) {
-    //             let data = result.Data.length;
-    //             if (data) {
-    //                 console.log(data);
-    //                 $('#CorrectHomework span')[0].className = 'badge bg-primary';
-    //                 $('#CorrectHomework span')[0].innerHTML = data;
-    //             }
-    //         }
-    //     }
-    // });
-    // $.ajax({
-    //     url: '/sms/auth/get/teacher/correct/paper/list',
-    //     type: 'get',
-    //     success: function (result) {
-    //         if (result.isSuccess) {
-    //             let data = result.Data.length;
-    //             if (data) {
-    //                 // console.log(data);
-    //                 $('#CorrectPaper span')[0].className = 'badge bg-primary';
-    //                 $('#CorrectPaper span')[0].innerHTML = data;
-    //             }
-    //         }
-    //     }
-    // });
-
-
-    /**
-     * @author xubowei
-     * 表格
-     * */
-    let table;
-    let tab = $('.wrapper .panel .table-response ul > .active ');
-    getTableData(tab[0].id);
-
-
-
-    let tabs = $('.wrapper .panel .table-response ul > li ');
-
-    function renderTable(data, columns, columnsDefs) {
-        table = $('#table').DataTable({
-            data: data,
-            destroy: true,
-            searching: false,
-            scrollX: true,
-            scrollY: '250px',
-            scrollCollapse: true,
-            paging: false,
-            columns: columns,
-            columnDefs: columnsDefs
-
-        });
-        table.on("click", 'tr td:last-child', function () {
-            let data = table.row(this).data();
-            let id = $('.active')[0].id;
-            console.log(data.course_id);
-            if (id === 'LearningFeedback') {
-                let date = new Date(data.course_date);
-                $('.modal-title').html("学情反馈");
-                $('#stu').html(data.student_name);
-                $('#class-code').html(data.grade_code);
-                $("#myModal").data("course_id", data.course_id);
-                $('#myModal').data('student_id', data.student_id);
-                $('#class-time').html(date.getFullYear() + '-' + (date.getMonth() + 1) + "-" + date.getDate() + '&nbsp;' + data.course_begin_time + '-' + data.course_end_time);
-            }
-            if (id === 'CorrectHomework') {
-                window.location.href = "course/get/homeWork/page/" + table.row('id') + '/' + table.row('course_id') + "/" + table.row('student_id') + "/" + 1;
-            }
-            if (id === 'CorrectPaper') {
-                window.open("auth/get/teacher/read/paper/" + table.row('student_id') + "," + table.row('course_paper_id') + "," + table.row('student_name') + "," + 1);
-            }
-
-        });
-    }
-/**
- * @author xubowei
- * 标签页的徽章
- * */
     (function () {
         $.ajax({
             url: '/sms/get/teacher/class/condition/list',
@@ -374,6 +279,53 @@ let day = date.getDate();
     })();
     /**
      * @author xubowei
+     * 表格
+     * */
+    let table;
+    let tab = $('.wrapper .panel .table-response ul > .active ');
+    getTableData(tab[0].id);
+
+    let tabs = $('.wrapper .panel .table-response ul > li ');
+
+    function renderTable(data, columns, columnsDefs) {
+        table = $('#table').DataTable({
+            data: data,
+            destroy: true,
+            searching: false,
+            scrollX: true,
+            scrollY: '250px',
+            scrollCollapse: true,
+            paging: false,
+            columns: columns,
+            columnDefs: columnsDefs
+
+        });
+        table.on("click", 'tr td:last-child', function () {
+            let data = table.row(this).data();
+            let id = $('.active')[0].id;
+            if (id === 'LearningFeedback') {
+                let date = new Date(data.course_date);
+                let check = data.condition_check===null? 0 : data.condition_check;
+                $('.modal-title').html("学情反馈");
+                $('#stu').html(data.student_name);
+                $('#class-code').html(data.grade_code);
+                $("#myModal").data("course_id", data.course_id);
+                $('#myModal').data('student_id', data.student_id);
+                $('#class-time').html(date.getFullYear() + '-' + (date.getMonth() + 1) + "-" + date.getDate() + '&nbsp;' + data.course_begin_time + '-' + data.course_end_time);
+                $($('.modal-body .classSituation .btn-group').children()[check]).addClass('active');
+            }
+            if (id === 'CorrectHomework') {
+                window.location.href = "/sms/course/get/homeWork/page/" + data.id + '/' + data.course_id + "/" + data.student_id + "/" + 1;
+            }
+            if (id === 'CorrectPaper') {
+                window.open("/sms/auth/get/teacher/read/paper/" + data.student_id + "," + data.course_paper_id + "," + data.student_name + "," + 1);
+            }
+
+        });
+    }
+
+    /**
+     * @author xubowei
      * 学情反馈点击批改后的列表提交
      * */
     $('.modal .modal-dialog .modal-content .modal-footer .btn-primary').click(function () {
@@ -383,7 +335,7 @@ let day = date.getDate();
         data.condition_comment = $('#classSummary').val();
         data.course_id = $("#myModal").data("course_id");
         data.student_id = $("#myModal").data("student_id");
-
+        console.log(data);
         $.ajax({
             url: '/sms/auth/save/class/condition',
             type: 'post',
@@ -454,13 +406,13 @@ let day = date.getDate();
                                     let date = new Date(data);
                                     return date.getFullYear() + '-' + date.getMonth() + 1 + '-' + date.getDate();
                                 },
-                                targets: 9
+                                targets: 5
                             },
                             {
                                 render: function (data, type, row) {
                                     return data + '-' + row.course_end_time;
                                 },
-                                targets: 10
+                                targets: 6
                             },
                             {
                                 targets: columns.length - 1,
@@ -469,8 +421,16 @@ let day = date.getDate();
                             },
                             {
                                 visible: false,
-                                targets: [10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32]
-                            }
+                                targets: [7, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32]
+                            },
+                            /**
+                             * @author xubowei
+                             * 禁用排序
+                             * */
+                            // {
+                            //     orderable: false,
+                            //     targets: []
+                            // }
                         ];
                         renderTable(data, columns, columnsDefs);
                     }
@@ -541,7 +501,7 @@ let day = date.getDate();
                             {
                                 targets: columns.length - 1,
                                 data: null,
-                                defaultContent: "<a href='javascript: void(0);' class='my-link'>批改</a>"
+                                defaultContent: "<button class='my-button' data-toggle='modal' data-target='#myModal'>批改</button>"
                             },
                             {
                                 visible: false,
@@ -616,7 +576,7 @@ let day = date.getDate();
                             {
                                 targets: columns.length - 1,
                                 data: null,
-                                defaultContent: "<a href='javascript: void(0);' class='my-link'>批改</a>"
+                                defaultContent: "<button class='my-button' data-toggle='modal' data-target='#myModal'>批改</button>"
                             },
                             {
                                 visible: false,
