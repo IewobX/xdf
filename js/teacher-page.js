@@ -501,7 +501,7 @@ let day = date.getDate();
                             {
                                 targets: columns.length - 1,
                                 data: null,
-                                defaultContent: "<button class='my-button' data-toggle='modal' data-target='#myModal'>批改</button>"
+                                defaultContent: "<button class='my-button'>批改</button>"
                             },
                             {
                                 visible: false,
@@ -536,7 +536,7 @@ let day = date.getDate();
                             $('#CorrectPaper span')[0].innerHTML = datalength;
                         }
                         columns = [
-                            {title: '开始时间', data: 'exam_begin'},
+                            {title: '考试时间', data: 'exam_begin'},
                             {title: '试卷名称', data: 'exam_name'},
                             {title: '姓名', data: 'student_name'},
                             {title: '学号', data: 'student_code'},
@@ -574,9 +574,16 @@ let day = date.getDate();
                         ];
                         columnsDefs = [
                             {
+                                render: function (data, type, row) {
+                                    let date = new Date(data);
+                                    return date.getFullYear() + '-' + date.getMonth() + 1 + '-' + date.getDate() +' '+ date.getHours() + ':' + date.getMinutes();
+                                },
+                                targets: 0
+                            },
+                            {
                                 targets: columns.length - 1,
                                 data: null,
-                                defaultContent: "<button class='my-button' data-toggle='modal' data-target='#myModal'>批改</button>"
+                                defaultContent: "<button class='my-button'>批改</button>"
                             },
                             {
                                 visible: false,
