@@ -1,4 +1,4 @@
-let url = "http://10.117.2.7:8080/sms/get/";
+let url = "http://sms.hzxdf.net/get/";
 
 // /**
 //  * @author xubowei

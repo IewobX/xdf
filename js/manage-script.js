@@ -12,7 +12,7 @@
     let away;
     let studied;
     $.ajax({
-        url: '/sms/get/student/and/classAwayTime',
+        url: '/get/student/and/classAwayTime',
         type: 'get',
         // async: false,
         success: function (result) {
@@ -87,7 +87,7 @@
      * */
 
     $("#school").spinnerBox({
-        url: "http://10.117.2.7:8080/sms/spinner/school",
+        url: "http://sms.hzxdf.net/spinner/school",
         placeholderText: "学校",
         defaultValue: 1,
         onChange: function (code) {
@@ -141,7 +141,7 @@
 
     function getChartsData(school, year, month) {
         $.ajax({
-            url: '/sms/get/line/graph/studying/student',
+            url: '/get/line/graph/studying/student',
             type: "post",
             // async: false,
             data: {'school': school, "year": year, "month": month},
@@ -179,14 +179,14 @@
      * 标签页的徽章
      * */
     $.ajax({
-        url: '/sms/get/class/end/remind',
+        url: '/get/class/end/remind',
         type: 'get',
         success: function (result) {
             if (result.isSuccess) {
                 let data = result.Data;
                 if (result.isSuccess) {
                     let datalength = result.Data.length;
-                    if (data) {
+                    if (data&&datalength) {
                         $('#StartReminding span')[0].className = 'badge bg-primary';
                         $('#StartReminding span')[0].innerHTML = datalength;
                     }
@@ -195,14 +195,14 @@
         }
     });
     $.ajax({
-        url: '/sms/get/class/start/remind',
+        url: '/get/class/start/remind',
         type: 'get',
         success: function (result) {
             if (result.isSuccess) {
                 let data = result.Data;
                 if (result.isSuccess) {
                     let datalength = result.Data.length;
-                    if (data) {
+                    if (data&&datalength) {
                         $('#EndReminding span')[0].className = 'badge bg-primary';
                         $('#EndReminding span')[0].innerHTML = datalength;
                     }
@@ -245,13 +245,13 @@
         let columnsDefs = [];
         if (id === 'StartReminding') {
             $.ajax({
-                url: '/sms/get/class/start/remind',
+                url: '/get/class/start/remind',
                 type: 'get',
                 success: function (result) {
                     if (result.isSuccess) {
                         data = result.Data;
                         let datalength = result.Data.length;
-                        if (data) {
+                        if (data&&datalength) {
                             $('#StartReminding span')[0].className = 'badge bg-primary';
                             $('#StartReminding span')[0].innerHTML = datalength;
                         }
@@ -308,13 +308,13 @@
         }
         if (id === 'EndReminding') {
             $.ajax({
-                url: '/sms/get/class/end/remind',
+                url: '/get/class/end/remind',
                 type: 'get',
                 success: function (result) {
                     if (result.isSuccess) {
                         data = result.Data;
                         let datalength = result.Data.length;
-                        if (data) {
+                        if (data&&datalength) {
                             $('#EndReminding span')[0].className = 'badge bg-primary';
                             $('#EndReminding span')[0].innerHTML = datalength;
                         }

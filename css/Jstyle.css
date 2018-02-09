@@ -101,6 +101,12 @@ table{
      * @auther xubowei
      * 上方4个标签栏
      */
+@media (min-width: 900px){
+    .col-lg-3{
+        width: 25%;
+    }
+}
+
 .me{
     display: inline-block;
     /*background: url("../img/user.png") no-repeat center center;*/
@@ -122,10 +128,11 @@ table{
 
 }
 .state-overview .symbol{
-    padding: 33px 15px;
+    padding: 33px 8%;
 }
 .state-overview .value{
     margin-top: 40px;
+    padding-left: 10%;
 }
 
 .wrapper .col-lg-3 .panel .gray{

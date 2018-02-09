@@ -18,7 +18,7 @@ let day = date.getDate();
      * */
 
     $("#class_code").spinnerBox({
-        url: "/sms/spinner/grade", placeholderText: "班级编码", defaultValue: 1, onChange: function (code) {
+        url: "/spinner/grade", placeholderText: "班级编码", defaultValue: 1, onChange: function (code) {
             let type = $("#score_type").spinnerBox("getValue");
             if (type && code) {
                 getChartsData(code, type)
@@ -52,7 +52,7 @@ let day = date.getDate();
         let studying;
         let taughtTime;
         $.ajax({
-            url: '/sms/get/teacher/head/info',
+            url: '/get/teacher/head/info',
             type: 'get',
             // data: {user: 'user'},
             success: function (result) {
@@ -128,7 +128,7 @@ let day = date.getDate();
 
     function getChartsData(grade_id, type) {
         $.ajax({
-            url: '/sms/get/line/graph/student/score',
+            url: '/get/line/graph/student/score',
             type: "post",
             // async: false,
             data: {"grade_id": grade_id, "type": type},
@@ -161,7 +161,7 @@ let day = date.getDate();
 
     function getCalendarData(year, month) {
         $.ajax({
-            url: "/sms/get/class/schedule",
+            url: "/get/class/schedule",
             type: 'get',
             data: {year: year, month: month},
             success: function (result) {
@@ -208,7 +208,7 @@ let day = date.getDate();
             console.log(year,month);
             getCalendarData(year, month);
         });
-    }, 500);
+    }, 1500);
 
     /**
      * @author xubowei
@@ -216,13 +216,13 @@ let day = date.getDate();
      * */
     (function () {
         $.ajax({
-            url: '/sms/get/teacher/class/condition/list',
+            url: '/get/teacher/class/condition/list',
             type: 'get',
             success: function (result) {
                 let data = result.Data;
                 if (result.isSuccess) {
                     let datalength = result.Data.length;
-                    if (data) {
+                    if (data&&datalength) {
                         $('#LearningFeedback span')[0].className = 'badge bg-primary';
                         $('#LearningFeedback span')[0].innerHTML = datalength;
                     }
@@ -236,7 +236,7 @@ let day = date.getDate();
         data.start_date = year + "-" + month + "-" + day;
         data.end_date = year + "-" + month + "-" + day;
         $.ajax({
-            url: '/sms/course/get/homeWork/list',
+            url: '/course/get/homeWork/list',
             type: 'post',
             data: JSON.stringify(data),
             contentType: "application/json",
@@ -244,7 +244,7 @@ let day = date.getDate();
                 let data = result.Data;
                 if (result.isSuccess) {
                     let datalength = result.Data.length;
-                    if (data) {
+                    if (data&&datalength) {
                         $('#CorrectHomework span')[0].className = 'badge bg-primary';
                         $('#CorrectHomework span')[0].innerHTML = datalength;
                     }
@@ -265,12 +265,12 @@ let day = date.getDate();
         data.student_name = null;
         data.grade_id = null;
         data.paper_type = null;
-        $.post('/sms/auth/get/teacher/correct/paper/list', data,
+        $.post('/auth/get/teacher/correct/paper/list', data,
             function (result) {
                 if (result.isSuccess) {
                     let data = result.Data;
                     let datalength = result.Data.length;
-                    if (data) {
+                    if (data&&datalength) {
                         $('#CorrectPaper span')[0].className = 'badge bg-primary';
                         $('#CorrectPaper span')[0].innerHTML = datalength;
                     }
@@ -315,10 +315,10 @@ let day = date.getDate();
                 $($('.modal-body .classSituation .btn-group').children()[check]).addClass('active');
             }
             if (id === 'CorrectHomework') {
-                window.location.href = "/sms/course/get/homeWork/page/" + data.id + '/' + data.course_id + "/" + data.student_id + "/" + 1;
+                window.location.href = "/course/get/homeWork/page/" + data.id + '/' + data.course_id + "/" + data.student_id + "/" + 1;
             }
             if (id === 'CorrectPaper') {
-                window.open("/sms/auth/get/teacher/read/paper/" + data.student_id + "," + data.course_paper_id + "," + data.student_name + "," + 1);
+                window.open("/auth/get/teacher/read/paper/" + data.student_id + "," + data.course_paper_id + "," + data.student_name + "," + 1);
             }
 
         });
@@ -337,7 +337,7 @@ let day = date.getDate();
         data.student_id = $("#myModal").data("student_id");
         console.log(data);
         $.ajax({
-            url: '/sms/auth/save/class/condition',
+            url: '/auth/save/class/condition',
             type: 'post',
             contentType: "application/json",
             dataType: "json",
@@ -353,17 +353,18 @@ let day = date.getDate();
         let columnsDefs;
         if (id === 'LearningFeedback') {
             $.ajax({
-                url: '/sms/get/teacher/class/condition/list',
+                url: '/get/teacher/class/condition/list',
                 type: 'get',
                 success: function (result) {
                     if (result.isSuccess) {
                         data = result.Data;
                         let datalength = result.Data.length;
-                        if (data) {
+                        if (data&&datalength) {
                             // console.log(data);
                             $('#LearningFeedback span')[0].className = 'badge bg-primary';
                             $('#LearningFeedback span')[0].innerHTML = datalength;
                         }
+
                         columns = [
                             {title: '学生姓名', data: 'student_name'},
                             {title: '学号', data: 'student_code'},
@@ -447,7 +448,7 @@ let day = date.getDate();
             data.start_date = year + "-" + month + "-" + day;
             data.end_date = year + "-" + month + "-" + day;
             $.ajax({
-                url: '/sms/course/get/homeWork/list',
+                url: '/course/get/homeWork/list',
                 type: 'post',
                 contentType: "application/json",
                 dataType: "json",
@@ -456,7 +457,7 @@ let day = date.getDate();
                     if (result.isSuccess) {
                         data = result.Data;
                         let datalength = result.Data.length;
-                        if (data) {
+                        if (data&&datalength) {
                             // console.log(data);
                             $('#CorrectHomework span')[0].className = 'badge bg-primary';
                             $('#CorrectHomework span')[0].innerHTML = datalength;
@@ -526,12 +527,12 @@ let day = date.getDate();
             data.student_name = null;
             data.grade_id = null;
             data.paper_type = null;
-            $.post('/sms/auth/get/teacher/correct/paper/list', data,
+            $.post('/auth/get/teacher/correct/paper/list', data,
                 function (result) {
                     if (result.isSuccess) {
                         data = result.Data;
                         let datalength = result.Data.length;
-                        if (data) {
+                        if (data&&datalength) {
                             $('#CorrectPaper span')[0].className = 'badge bg-primary';
                             $('#CorrectPaper span')[0].innerHTML = datalength;
                         }
